@@ -348,6 +348,71 @@ def main() -> int:
             A(f"| *parent* | - | *{fmt(pr.get('ipsae_min'))}* | - "
               f"| *{fmt(pr.get('epitope_recovery'),3)}* |")
             A("")
+        rel = diag.get("reliability") or {}
+        if rel.get("reliability_single_seed") is not None:
+            A("### How much of the ipSAE ranking is real?")
+            A("")
+            A("A variance decomposition over the designs that were run under multiple seeds. "
+              "This is the number that governs every other claim in this document.")
+            A("")
+            A("| Quantity | Value |")
+            A("| --- | ---: |")
+            A(f"| Designs with replicates | {rel.get('n_replicated')} |")
+            A(f"| Mean seeds per design | {rel.get('mean_seeds_per_design')} |")
+            A(f"| sd within design (seed noise) | {fmt(rel.get('sd_within_seed'))} |")
+            A(f"| sd between designs (observed) | {fmt(rel.get('sd_between_designs_observed'))} |")
+            A(f"| sd between designs (true, est.) | {fmt(rel.get('sd_between_designs_true_est'))} |")
+            A(f"| **Reliability of a single seed** | **{fmt(rel.get('reliability_single_seed'),3)}** |")
+            A(f"| Reliability of the current mean | {fmt(rel.get('reliability_current_mean'),3)} |")
+            A(f"| Seeds needed for reliability 0.8 | {rel.get('seeds_for_reliability_0.8')} |")
+            A(f"| Seeds needed for reliability 0.9 | {rel.get('seeds_for_reliability_0.9')} |")
+            A("")
+            A("Reliability is the fraction of ranking variance that is real signal rather than "
+              "seed noise. A value near 0.5 means a single-seed ranking is close to a coin "
+              "flip between designs of similar quality, so **a single-seed ipSAE table must not "
+              "be read as an ordering of design quality.**")
+            A("")
+            dis = rel.get("ipsae_correlations_disattenuated")
+            if dis:
+                A(f"Because the measurements are noisy, the correlations in the table above are "
+                  f"*attenuated* toward zero. Dividing by sqrt(reliability) "
+                  f"(x{fmt(rel.get('attenuation_correction_factor'),2)}) estimates the "
+                  f"underlying relationships with ipSAE:")
+                A("")
+                for k, v in dis.items():
+                    A(f"- `{k}`: {fmt(v)}")
+                A("")
+                A("So the true effects are **stronger** than measured, not weaker - including the "
+                  "negative ones.")
+                A("")
+            pc = rel.get("parent_comparison") or {}
+            if pc.get("tests"):
+                A("### Replicated designs tested against the parent")
+                A("")
+                A(f"Parent baseline {fmt(pc.get('parent_mean'))} +/- {fmt(pc.get('parent_sd'))} "
+                  f"over {pc.get('parent_n_seeds')} seeds. Welch-style comparison, "
+                  f"significance threshold {pc.get('threshold')}.")
+                A("")
+                A(f"**Above parent: {pc.get('n_above')} | below: {pc.get('n_below')} | "
+                  f"indistinguishable: {pc.get('n_indistinguishable')}**")
+                A("")
+                A("| Design | seeds | ipSAE mean | sd | delta | t | verdict |")
+                A("| --- | ---: | ---: | ---: | ---: | ---: | --- |")
+                for d in pc["tests"]:
+                    A(f"| `{d['candidate_id']}` | {d['n_seeds']} | {fmt(d['ipsae_mean'])} "
+                      f"| {fmt(d['ipsae_sd'])} | {d['delta_vs_parent']:+.4f} | {d['t']:+.2f} "
+                      f"| {d['verdict']} |")
+                A("")
+                if pc.get("n_above", 0) == 0:
+                    A("**No design is statistically distinguishable as better than the parent.** "
+                      "This is the honest headline result. It is also the expected one: the "
+                      "parent is a sub-picomolar, heavily optimised therapeutic antibody, and a "
+                      "pipeline reporting that most of its 5-8 substitution variants improved on "
+                      "it would be evidence of a broken scoring function rather than a "
+                      "successful campaign. Designs are submitted as compliant, structurally "
+                      "intact candidates with genuine ipSAE values - not as predicted "
+                      "improvements.")
+                    A("")
         if diag.get("by_branch"):
             A("### By branch")
             A("")

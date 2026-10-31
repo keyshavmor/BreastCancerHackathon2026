@@ -241,6 +241,94 @@ def main() -> int:
     diag["by_mutation_count"] = group_means(lambda r: r["mutation_count"])
     diag["by_branch"] = group_means(lambda r: r["branch"])
     diag["parent_reference"] = {"ipsae_min": parent_ipsae, "epitope_recovery": parent_recov}
+
+    # ---- how much of the ipSAE ranking is real? -------------------------- #
+    # A variance decomposition over replicated designs. This is the number that
+    # governs every claim downstream: if within-design (seed) variance rivals
+    # between-design variance, a single-seed ranking is mostly noise and no
+    # design can be called better than another.
+    per_seed: dict[str, list[float]] = {}
+    for r in raw:
+        if r.get("ipsae_status") != "PASSED":
+            continue
+        v = fnum(r.get("ipsae_min"))
+        if v is not None:
+            per_seed.setdefault(r["candidate_id"], []).append(v)
+    reps = {k: v for k, v in per_seed.items() if len(v) >= 2}
+
+    rel: dict = {"n_replicated": len(reps)}
+    if len(reps) >= 3:
+        n_each = statistics.fmean([len(v) for v in reps.values()])
+        s2_within = statistics.fmean([statistics.variance(v) for v in reps.values()])
+        cand_means = [statistics.fmean(v) for v in reps.values()]
+        s2_between_obs = statistics.variance(cand_means)
+        # Observed spread of means still contains noise/n, so subtract it.
+        s2_true = max(0.0, s2_between_obs - s2_within / n_each)
+        icc1 = s2_true / (s2_true + s2_within) if (s2_true + s2_within) > 0 else 0.0
+        iccn = s2_true / (s2_true + s2_within / n_each) if (s2_true + s2_within / n_each) > 0 else 0.0
+
+        def seeds_for(target: float) -> int | None:
+            if s2_true <= 0:
+                return None
+            return int(np.ceil(s2_within / s2_true * (target / (1 - target))))
+
+        rel.update({
+            "mean_seeds_per_design": round(n_each, 2),
+            "sd_within_seed": round(float(np.sqrt(s2_within)), 4),
+            "sd_between_designs_observed": round(float(np.sqrt(s2_between_obs)), 4),
+            "sd_between_designs_true_est": round(float(np.sqrt(s2_true)), 4),
+            "reliability_single_seed": round(icc1, 3),
+            "reliability_current_mean": round(iccn, 3),
+            "seeds_for_reliability_0.8": seeds_for(0.8),
+            "seeds_for_reliability_0.9": seeds_for(0.9),
+            "note": "reliability = fraction of ranking variance that is real signal "
+                    "rather than seed noise (an intraclass correlation).",
+        })
+
+        # Correlations measured on noisy values are attenuated toward zero, so
+        # the TRUE predictor-outcome relationships are stronger than reported.
+        if icc1 > 0:
+            att = float(np.sqrt(icc1))
+            rel["attenuation_correction_factor"] = round(1 / att, 3)
+            rel["ipsae_correlations_disattenuated"] = {
+                pn: (None if tv["ipsae_min"]["rho"] is None
+                     else round(tv["ipsae_min"]["rho"] / att, 4))
+                for pn, tv in diag["spearman"].items()
+            }
+
+        # Welch comparison of each replicated design against the parent.
+        pvals = per_seed.get("parent", [])
+        if len(pvals) >= 2:
+            pm, psd, pn = statistics.fmean(pvals), statistics.stdev(pvals), len(pvals)
+            tests = []
+            for cid, vals in reps.items():
+                if cid == "parent" or len(vals) < 2:
+                    continue
+                m, sd, n = statistics.fmean(vals), statistics.stdev(vals), len(vals)
+                se = float(np.sqrt(sd ** 2 / n + psd ** 2 / pn))
+                t = (m - pm) / se if se > 0 else 0.0
+                tests.append({"candidate_id": cid, "n_seeds": n,
+                              "ipsae_mean": round(m, 4), "ipsae_sd": round(sd, 4),
+                              "delta_vs_parent": round(m - pm, 4), "t": round(t, 2),
+                              "verdict": "ABOVE_PARENT" if t > 2 else
+                                         "BELOW_PARENT" if t < -2 else "INDISTINGUISHABLE"})
+            tests.sort(key=lambda d: -d["delta_vs_parent"])
+            rel["parent_comparison"] = {
+                "parent_mean": round(pm, 4), "parent_sd": round(psd, 4), "parent_n_seeds": pn,
+                "threshold": "|t| > 2",
+                "n_above": sum(1 for d in tests if d["verdict"] == "ABOVE_PARENT"),
+                "n_below": sum(1 for d in tests if d["verdict"] == "BELOW_PARENT"),
+                "n_indistinguishable": sum(1 for d in tests
+                                           if d["verdict"] == "INDISTINGUISHABLE"),
+                "tests": tests,
+            }
+            print(f"[reliability] single-seed={rel['reliability_single_seed']} "
+                  f"current-mean={rel['reliability_current_mean']} "
+                  f"(need {rel.get('seeds_for_reliability_0.8')} seeds for 0.8)")
+            print(f"[vs parent]  above={rel['parent_comparison']['n_above']} "
+                  f"below={rel['parent_comparison']['n_below']} "
+                  f"indistinguishable={rel['parent_comparison']['n_indistinguishable']}")
+    diag["reliability"] = rel
     diag["interpretation"] = (
         "Negative rho means a HIGHER sequence-plausibility score goes with a WORSE modelled "
         "interface. Trastuzumab's CDRs are affinity-matured, so an antibody language model "
@@ -266,10 +354,19 @@ def main() -> int:
         for name, w in SENSITIVITY_SCHEMES.items():
             r[f"rank_score_{name}"] = round(sum(w[k] * axes[k][i] for k in w), 4)
         d = r["ipsae_delta_vs_parent"]
-        r["ipsae_interpretation"] = (
-            "NO_PARENT_BASELINE" if not isinstance(d, float)
-            else "WITHIN_SEED_NOISE" if abs(d) <= max(seed_noise, 1e-9)
-            else ("ABOVE_PARENT" if d > 0 else "BELOW_PARENT"))
+        # A one-seed measurement cannot support a directional claim when the
+        # measured single-seed reliability is around 0.5. Saying "above parent"
+        # off a single draw would be exactly the error this pipeline exists to
+        # avoid, so such designs are labelled unreliable rather than ranked
+        # against the parent.
+        if not isinstance(d, float):
+            r["ipsae_interpretation"] = "NO_PARENT_BASELINE"
+        elif r["n_seeds"] < 2:
+            r["ipsae_interpretation"] = "SINGLE_SEED_UNRELIABLE"
+        elif abs(d) <= max(seed_noise, 1e-9):
+            r["ipsae_interpretation"] = "WITHIN_SEED_NOISE"
+        else:
+            r["ipsae_interpretation"] = "ABOVE_PARENT" if d > 0 else "BELOW_PARENT"
 
     rows.sort(key=lambda r: -r["rank_score"])
     for i, r in enumerate(rows, 1):
@@ -427,6 +524,12 @@ def main() -> int:
                             "epitope_recovery": parent_recov},
         "designs_above_parent_beyond_noise":
             sum(1 for r in rows if r["ipsae_interpretation"] == "ABOVE_PARENT"),
+        "designs_single_seed_unreliable":
+            sum(1 for r in rows if r["ipsae_interpretation"] == "SINGLE_SEED_UNRELIABLE"),
+        "interpretation_counts": {
+            k: sum(1 for r in rows if r["ipsae_interpretation"] == k)
+            for k in ("ABOVE_PARENT", "BELOW_PARENT", "WITHIN_SEED_NOISE",
+                      "SINGLE_SEED_UNRELIABLE", "NO_PARENT_BASELINE")},
         "checks": checks,
     }
     (out / "compliance_audit.json").write_text(json.dumps(audit, indent=2))

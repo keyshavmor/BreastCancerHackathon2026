@@ -6,14 +6,77 @@ parallel, so it is the only stage worth renting GPUs for.
 
 ## Setup
 
+### 1. Client environment and authentication
+
+No manually-pasted API key is needed for interactive use. `modal token new`
+opens a browser, authenticates, and writes credentials to `~/.modal.toml`.
+
 ```bash
 conda env create -f envs/her2_modal.yml
 conda activate her2_modal
-modal token new                 # one-time browser auth
 
-# one-time: put Boltz-2 weights + CCD cache (~3 GB) in a persistent Volume
+modal token new
+```
+
+On a headless machine the command prints a URL to open elsewhere. If that is
+awkward, create a token at **modal.com → Settings → API Tokens** and set it
+explicitly (this is also the form to use in CI):
+
+```bash
+modal token set --token-id ak-XXXXXXXX --token-secret as-XXXXXXXX
+```
+
+Check it worked:
+
+```bash
+ls ~/.modal.toml && modal app list
+```
+
+### 2. One-time remote cache
+
+Puts the ~3 GB of Boltz-2 weights and the CCD cache into a persistent Volume so
+no GPU container ever re-downloads them. Runs on a cheap CPU container.
+
+```bash
 modal run modal/her2_modal_app.py::populate_cache
 ```
+
+### 3. Smoke test before anything large
+
+This app is validated by constructing it locally against modal 1.6.3; it has not
+been executed against live Modal. Spend a few cents confirming the round trip
+before launching hundreds of containers.
+
+```bash
+modal run modal/her2_modal_app.py --queue outputs/top_50_scored.csv \
+  --limit 2 --batch-size 2 --seeds 42
+
+modal volume get her2-boltz-out / ./pipeline_runs/modal_test
+python scripts/stage5_score_ipsae.py --run-dir pipeline_runs/modal_test
+```
+
+If stage 5 reports `PASSED` for those structures, the whole path works.
+
+### 4. The run that is actually worth the credits
+
+Measured on this project: single-seed ipSAE reliability is **0.461**, and **11
+seeds** are needed for 0.9. So spend the credits on seeds, not on more designs.
+
+```bash
+HER2_MODAL_GPU=A10G modal run modal/her2_modal_app.py \
+  --queue outputs/top_50_scored.csv --limit 50 --batch-size 10 \
+  --seeds 42,7,13,101,202,303,404,505,606,707,808
+```
+
+561 structures, roughly **$2.60**, a few minutes of wall-clock across ~20
+containers - and it moves the top 50 from "about half noise" to statistically
+solid. Repeat for the next 50 and you are still under $10 of a $30 budget.
+
+Monitor at **modal.com/apps**. `modal run` is synchronous and streams logs, so
+Ctrl-C stops the work and the billing.
+
+Prerequisites that must exist locally before the image builds (they are added to
+the image): `outputs/msa_cache/` (~5 MB) and `outputs/her2_domain_iv.fasta`.
 
 Prerequisite: `outputs/msa_cache/` and `outputs/her2_domain_iv.fasta` must exist
 locally — they are baked into the image. Create them once with:
