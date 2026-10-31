@@ -98,6 +98,10 @@ def main() -> int:
     ap.add_argument("--top-50", type=int, default=50,
                     help="also emit this many top-ranked fully scored designs")
     ap.add_argument("--min-epitope-recovery", type=float, default=MIN_EPITOPE_RECOVERY)
+    ap.add_argument("--ipsae-floor-sd", type=float, default=3.0,
+                    help="veto designs whose ipSAE is more than this many seed-SDs below the "
+                         "parent; a collapsed interface is disqualifying regardless of how well "
+                         "a design scores on the other ranking axes (0 disables)")
     args = ap.parse_args()
     out = args.outdir
     hc.assert_parent_integrity()
@@ -149,6 +153,19 @@ def main() -> int:
             excluded.append({"candidate_id": cid,
                              "reason": f"epitope_recovery {recov} < {args.min_epitope_recovery}"})
             continue
+        # Interface collapse flag. A design this far below the parent has lost
+        # its interface, and rank aggregation across five axes could otherwise
+        # NOMINATE it, because strong sequence-consensus, epitope-recovery and
+        # developability scores outvote a catastrophic ipSAE.
+        #
+        # It is flagged rather than dropped: the organizer asked for a genuine
+        # ipSAE per submitted design, and a poor score is a real result. So the
+        # design stays in submission_scored.* with its measured value, and is
+        # barred from the lab nominations only.
+        interface_collapsed = False
+        if parent_ipsae is not None and args.ipsae_floor_sd > 0:
+            floor = parent_ipsae - args.ipsae_floor_sd * max(seed_noise, 1e-6)
+            interface_collapsed = ipsae < floor
         m = meta_of[cid]
         newlia = m.get("new_liability_flags") or ""
         rows.append({
@@ -165,6 +182,7 @@ def main() -> int:
             "priority_tier": m.get("priority_tier", ""),
             "boltz_evaluated": True,
             "n_seeds": int(a.get("n_seeds") or 1),
+            "interface_status": "COLLAPSED" if interface_collapsed else "OK",
             "ipsae_min": ipsae, "ipsae_min_sd": fnum(a.get("ipsae_min_sd"), 0.0),
             "ipsae_min_best": fnum(a.get("ipsae_min_best")),
             "ipsae_max": fnum(a.get("ipsae_max_mean")),
@@ -387,13 +405,16 @@ def main() -> int:
     for r in rows:
         r["mutation_positions"] = [int(x[1:-1]) for x in r["mutations_1based"].split(";")]
     chosen: list[dict] = []
+    nominable = [r for r in rows if r["interface_status"] == "OK"]
+    print(f"[select] {len(rows) - len(nominable)} designs barred from nomination "
+          f"(interface collapsed); {len(nominable)} eligible")
     quota = {b: max(1, round(args.top_n * s / sum(BRANCH_SLOTS.values())))
              for b, s in BRANCH_SLOTS.items()}
     for b, q in quota.items():
-        pool = [r for r in rows if r["branch"] == b]
+        pool = [r for r in nominable if r["branch"] == b]
         chosen += greedy_diverse(pool, min(q, len(pool)))
     have = {r["candidate_id"] for r in chosen}
-    for r in rows:
+    for r in nominable:
         if len(chosen) >= args.top_n:
             break
         if r["candidate_id"] not in have:
@@ -409,7 +430,7 @@ def main() -> int:
     # ---- write submission artifacts --------------------------------------- #
     fields = ["rank", "candidate_id", "branch", "priority_tier", "selected_top15",
               "mutation_count", "mutations_1based", "mutated_domains", "mutated_CDRs",
-              "new_cysteine_count", "new_liability_flags",
+              "new_cysteine_count", "new_liability_flags", "interface_status",
               "ablang2_contextual", "esm2_contextual", "sequence_consensus_score",
               "model_disagreement", "boltz_evaluated", "n_seeds", "seeds",
               "ipsae_min", "ipsae_min_sd", "ipsae_min_best", "ipsae_max",

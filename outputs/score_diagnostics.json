@@ -3,85 +3,85 @@
   "spearman": {
     "ablang2_contextual": {
       "ipsae_min": {
-        "rho": 0.1073,
+        "rho": 0.0991,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.0721,
+        "rho": -0.0882,
         "n": 149
       },
       "iptm": {
-        "rho": 0.0844,
+        "rho": 0.0756,
         "n": 149
       }
     },
     "esm2_contextual": {
       "ipsae_min": {
-        "rho": -0.1988,
+        "rho": -0.2311,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.0232,
+        "rho": -0.064,
         "n": 149
       },
       "iptm": {
-        "rho": -0.2082,
+        "rho": -0.233,
         "n": 149
       }
     },
     "ablang2_additive_mean": {
       "ipsae_min": {
-        "rho": -0.3118,
+        "rho": -0.3151,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.2984,
+        "rho": -0.3662,
         "n": 149
       },
       "iptm": {
-        "rho": -0.3394,
+        "rho": -0.3418,
         "n": 149
       }
     },
     "esm2_additive_mean": {
       "ipsae_min": {
-        "rho": -0.2988,
+        "rho": -0.3234,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.191,
+        "rho": -0.2389,
         "n": 149
       },
       "iptm": {
-        "rho": -0.3329,
+        "rho": -0.3482,
         "n": 149
       }
     },
     "sequence_consensus_score": {
       "ipsae_min": {
-        "rho": -0.2408,
+        "rho": -0.2645,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.2045,
+        "rho": -0.2643,
         "n": 149
       },
       "iptm": {
-        "rho": -0.2726,
+        "rho": -0.2905,
         "n": 149
       }
     },
     "mutation_count": {
       "ipsae_min": {
-        "rho": -0.2606,
+        "rho": -0.2494,
         "n": 149
       },
       "epitope_recovery": {
-        "rho": -0.0497,
+        "rho": -0.0857,
         "n": 149
       },
       "iptm": {
-        "rho": -0.2676,
+        "rho": -0.2581,
         "n": 149
       }
     }
@@ -89,61 +89,61 @@
   "by_mutation_count": {
     "5": {
       "n": 21,
-      "ipsae_min_mean": 0.6584,
-      "ipsae_min_sd": 0.0876,
-      "iptm_mean": 0.8819,
-      "epitope_recovery_mean": 0.9357
+      "ipsae_min_mean": 0.6495,
+      "ipsae_min_sd": 0.0802,
+      "iptm_mean": 0.8788,
+      "epitope_recovery_mean": 0.9348
     },
     "6": {
       "n": 32,
-      "ipsae_min_mean": 0.5745,
-      "ipsae_min_sd": 0.2124,
-      "iptm_mean": 0.8247,
-      "epitope_recovery_mean": 0.9024
+      "ipsae_min_mean": 0.5679,
+      "ipsae_min_sd": 0.208,
+      "iptm_mean": 0.8228,
+      "epitope_recovery_mean": 0.8978
     },
     "7": {
       "n": 31,
-      "ipsae_min_mean": 0.6523,
-      "ipsae_min_sd": 0.0798,
-      "iptm_mean": 0.8794,
-      "epitope_recovery_mean": 0.9491
+      "ipsae_min_mean": 0.6446,
+      "ipsae_min_sd": 0.0746,
+      "iptm_mean": 0.8765,
+      "epitope_recovery_mean": 0.9431
     },
     "8": {
       "n": 65,
-      "ipsae_min_mean": 0.5711,
-      "ipsae_min_sd": 0.1291,
-      "iptm_mean": 0.8452,
-      "epitope_recovery_mean": 0.9198
+      "ipsae_min_mean": 0.5704,
+      "ipsae_min_sd": 0.1312,
+      "iptm_mean": 0.8448,
+      "epitope_recovery_mean": 0.9142
     }
   },
   "by_branch": {
     "A_h3": {
       "n": 28,
-      "ipsae_min_mean": 0.4841,
-      "ipsae_min_sd": 0.1584,
-      "iptm_mean": 0.7982,
-      "epitope_recovery_mean": 0.8678
+      "ipsae_min_mean": 0.4829,
+      "ipsae_min_sd": 0.1616,
+      "iptm_mean": 0.7972,
+      "epitope_recovery_mean": 0.8625
     },
     "B_interface": {
       "n": 33,
-      "ipsae_min_mean": 0.6369,
-      "ipsae_min_sd": 0.1129,
-      "iptm_mean": 0.8682,
-      "epitope_recovery_mean": 0.9001
+      "ipsae_min_mean": 0.6304,
+      "ipsae_min_sd": 0.1099,
+      "iptm_mean": 0.8665,
+      "epitope_recovery_mean": 0.8998
     },
     "C_mixed": {
       "n": 61,
-      "ipsae_min_mean": 0.61,
-      "ipsae_min_sd": 0.144,
-      "iptm_mean": 0.8567,
-      "epitope_recovery_mean": 0.941
+      "ipsae_min_mean": 0.6059,
+      "ipsae_min_sd": 0.1412,
+      "iptm_mean": 0.8549,
+      "epitope_recovery_mean": 0.9343
     },
     "D_framework": {
       "n": 27,
-      "ipsae_min_mean": 0.6583,
-      "ipsae_min_sd": 0.0861,
-      "iptm_mean": 0.8835,
-      "epitope_recovery_mean": 0.9753
+      "ipsae_min_mean": 0.6512,
+      "ipsae_min_sd": 0.0802,
+      "iptm_mean": 0.8816,
+      "epitope_recovery_mean": 0.9698
     }
   },
   "parent_reference": {
@@ -151,24 +151,24 @@
     "epitope_recovery": 0.9825
   },
   "reliability": {
-    "n_replicated": 21,
-    "mean_seeds_per_design": 3.0,
-    "sd_within_seed": 0.1014,
-    "sd_between_designs_observed": 0.1105,
-    "sd_between_designs_true_est": 0.0937,
-    "reliability_single_seed": 0.461,
-    "reliability_current_mean": 0.719,
-    "seeds_for_reliability_0.8": 5,
-    "seeds_for_reliability_0.9": 11,
+    "n_replicated": 64,
+    "mean_seeds_per_design": 2.72,
+    "sd_within_seed": 0.072,
+    "sd_between_designs_observed": 0.109,
+    "sd_between_designs_true_est": 0.0999,
+    "reliability_single_seed": 0.658,
+    "reliability_current_mean": 0.84,
+    "seeds_for_reliability_0.8": 3,
+    "seeds_for_reliability_0.9": 5,
     "note": "reliability = fraction of ranking variance that is real signal rather than seed noise (an intraclass correlation).",
-    "attenuation_correction_factor": 1.473,
+    "attenuation_correction_factor": 1.233,
     "ipsae_correlations_disattenuated": {
-      "ablang2_contextual": 0.1581,
-      "esm2_contextual": -0.2929,
-      "ablang2_additive_mean": -0.4594,
-      "esm2_additive_mean": -0.4402,
-      "sequence_consensus_score": -0.3548,
-      "mutation_count": -0.384
+      "ablang2_contextual": 0.1222,
+      "esm2_contextual": -0.2849,
+      "ablang2_additive_mean": -0.3884,
+      "esm2_additive_mean": -0.3986,
+      "sequence_consensus_score": -0.326,
+      "mutation_count": -0.3074
     },
     "parent_comparison": {
       "parent_mean": 0.6907,
@@ -176,9 +176,72 @@
       "parent_n_seeds": 3,
       "threshold": "|t| > 2",
       "n_above": 0,
-      "n_below": 6,
-      "n_indistinguishable": 14,
+      "n_below": 7,
+      "n_indistinguishable": 56,
       "tests": [
+        {
+          "candidate_id": "HER2_17485",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7587,
+          "ipsae_sd": 0.0218,
+          "delta_vs_parent": 0.0679,
+          "t": 1.59,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_17641",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7531,
+          "ipsae_sd": 0.0384,
+          "delta_vs_parent": 0.0623,
+          "t": 1.29,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_17465",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7524,
+          "ipsae_sd": 0.0465,
+          "delta_vs_parent": 0.0617,
+          "t": 1.29,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_14514",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7521,
+          "ipsae_sd": 0.0132,
+          "delta_vs_parent": 0.0613,
+          "t": 1.52,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_13625",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7499,
+          "ipsae_sd": 0.0095,
+          "delta_vs_parent": 0.0592,
+          "t": 1.48,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_17118",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7464,
+          "ipsae_sd": 0.0417,
+          "delta_vs_parent": 0.0557,
+          "t": 1.2,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_21342",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7452,
+          "ipsae_sd": 0.0094,
+          "delta_vs_parent": 0.0545,
+          "t": 1.35,
+          "verdict": "INDISTINGUISHABLE"
+        },
         {
           "candidate_id": "HER2_1238",
           "n_seeds": 3,
@@ -186,6 +249,150 @@
           "ipsae_sd": 0.0241,
           "delta_vs_parent": 0.0467,
           "t": 1.11,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_21202",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7332,
+          "ipsae_sd": 0.0104,
+          "delta_vs_parent": 0.0425,
+          "t": 1.06,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_9557",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7307,
+          "ipsae_sd": 0.0478,
+          "delta_vs_parent": 0.04,
+          "t": 0.83,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_18461",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7305,
+          "ipsae_sd": 0.0055,
+          "delta_vs_parent": 0.0398,
+          "t": 1.0,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_23723",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7302,
+          "ipsae_sd": 0.056,
+          "delta_vs_parent": 0.0395,
+          "t": 0.77,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_11519",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7299,
+          "ipsae_sd": 0.0099,
+          "delta_vs_parent": 0.0392,
+          "t": 0.97,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_5693",
+          "n_seeds": 3,
+          "ipsae_mean": 0.729,
+          "ipsae_sd": 0.0288,
+          "delta_vs_parent": 0.0383,
+          "t": 0.89,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_2720",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7271,
+          "ipsae_sd": 0.055,
+          "delta_vs_parent": 0.0364,
+          "t": 0.65,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_20989",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7262,
+          "ipsae_sd": 0.0434,
+          "delta_vs_parent": 0.0355,
+          "t": 0.71,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_14939",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7252,
+          "ipsae_sd": 0.0122,
+          "delta_vs_parent": 0.0344,
+          "t": 0.85,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_28172",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7238,
+          "ipsae_sd": 0.0577,
+          "delta_vs_parent": 0.0331,
+          "t": 0.58,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_34846",
+          "n_seeds": 2,
+          "ipsae_mean": 0.7237,
+          "ipsae_sd": 0.0238,
+          "delta_vs_parent": 0.033,
+          "t": 0.76,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_8022",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7231,
+          "ipsae_sd": 0.0315,
+          "delta_vs_parent": 0.0324,
+          "t": 0.74,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_8386",
+          "n_seeds": 3,
+          "ipsae_mean": 0.714,
+          "ipsae_sd": 0.0403,
+          "delta_vs_parent": 0.0233,
+          "t": 0.51,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_14954",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7096,
+          "ipsae_sd": 0.0281,
+          "delta_vs_parent": 0.0189,
+          "t": 0.44,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_15988",
+          "n_seeds": 2,
+          "ipsae_mean": 0.707,
+          "ipsae_sd": 0.0284,
+          "delta_vs_parent": 0.0163,
+          "t": 0.37,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_23198",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7058,
+          "ipsae_sd": 0.0795,
+          "delta_vs_parent": 0.0151,
+          "t": 0.25,
           "verdict": "INDISTINGUISHABLE"
         },
         {
@@ -207,12 +414,93 @@
           "verdict": "INDISTINGUISHABLE"
         },
         {
+          "candidate_id": "HER2_19503",
+          "n_seeds": 3,
+          "ipsae_mean": 0.7011,
+          "ipsae_sd": 0.0336,
+          "delta_vs_parent": 0.0104,
+          "t": 0.24,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_18216",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6947,
+          "ipsae_sd": 0.0144,
+          "delta_vs_parent": 0.004,
+          "t": 0.1,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
           "candidate_id": "HER2_15708",
           "n_seeds": 3,
           "ipsae_mean": 0.6945,
           "ipsae_sd": 0.0513,
           "delta_vs_parent": 0.0038,
           "t": 0.08,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_11449",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6935,
+          "ipsae_sd": 0.0137,
+          "delta_vs_parent": 0.0028,
+          "t": 0.07,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_10808",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6922,
+          "ipsae_sd": 0.0445,
+          "delta_vs_parent": 0.0015,
+          "t": 0.03,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_13086",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6901,
+          "ipsae_sd": 0.0555,
+          "delta_vs_parent": -0.0006,
+          "t": -0.01,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_7827",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6882,
+          "ipsae_sd": 0.0817,
+          "delta_vs_parent": -0.0025,
+          "t": -0.04,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_19004",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6828,
+          "ipsae_sd": 0.0501,
+          "delta_vs_parent": -0.008,
+          "t": -0.16,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_15056",
+          "n_seeds": 2,
+          "ipsae_mean": 0.682,
+          "ipsae_sd": 0.0141,
+          "delta_vs_parent": -0.0087,
+          "t": -0.21,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_3091",
+          "n_seeds": 3,
+          "ipsae_mean": 0.678,
+          "ipsae_sd": 0.0893,
+          "delta_vs_parent": -0.0127,
+          "t": -0.19,
           "verdict": "INDISTINGUISHABLE"
         },
         {
@@ -234,12 +522,75 @@
           "verdict": "INDISTINGUISHABLE"
         },
         {
+          "candidate_id": "HER2_17233",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6693,
+          "ipsae_sd": 0.0312,
+          "delta_vs_parent": -0.0214,
+          "t": -0.49,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_8798",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6692,
+          "ipsae_sd": 0.0639,
+          "delta_vs_parent": -0.0215,
+          "t": -0.36,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
           "candidate_id": "HER2_21408",
           "n_seeds": 3,
           "ipsae_mean": 0.6686,
           "ipsae_sd": 0.017,
           "delta_vs_parent": -0.0222,
           "t": -0.54,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_26656",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6514,
+          "ipsae_sd": 0.0948,
+          "delta_vs_parent": -0.0393,
+          "t": -0.58,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_17437",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6468,
+          "ipsae_sd": 0.0047,
+          "delta_vs_parent": -0.044,
+          "t": -1.1,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_4977",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6458,
+          "ipsae_sd": 0.0491,
+          "delta_vs_parent": -0.0449,
+          "t": -0.92,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_19316",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6451,
+          "ipsae_sd": 0.0656,
+          "delta_vs_parent": -0.0456,
+          "t": -0.75,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_7401",
+          "n_seeds": 2,
+          "ipsae_mean": 0.6447,
+          "ipsae_sd": 0.0215,
+          "delta_vs_parent": -0.0461,
+          "t": -1.08,
           "verdict": "INDISTINGUISHABLE"
         },
         {
@@ -261,12 +612,39 @@
           "verdict": "INDISTINGUISHABLE"
         },
         {
+          "candidate_id": "HER2_8533",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6359,
+          "ipsae_sd": 0.0874,
+          "delta_vs_parent": -0.0548,
+          "t": -0.85,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
           "candidate_id": "HER2_24532",
           "n_seeds": 3,
           "ipsae_mean": 0.6312,
           "ipsae_sd": 0.0832,
           "delta_vs_parent": -0.0595,
           "t": -0.95,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_5265",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6294,
+          "ipsae_sd": 0.0139,
+          "delta_vs_parent": -0.0613,
+          "t": -1.51,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_11678",
+          "n_seeds": 3,
+          "ipsae_mean": 0.6269,
+          "ipsae_sd": 0.1672,
+          "delta_vs_parent": -0.0638,
+          "t": -0.61,
           "verdict": "INDISTINGUISHABLE"
         },
         {
@@ -358,6 +736,15 @@
           "delta_vs_parent": -0.3159,
           "t": -1.64,
           "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "candidate_id": "HER2_0888",
+          "n_seeds": 2,
+          "ipsae_mean": 0.1296,
+          "ipsae_sd": 0.0517,
+          "delta_vs_parent": -0.5611,
+          "t": -10.39,
+          "verdict": "BELOW_PARENT"
         }
       ]
     }

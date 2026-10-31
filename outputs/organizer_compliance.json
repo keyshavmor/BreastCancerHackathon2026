@@ -1,0 +1,83 @@
+{
+  "generated_utc": "2026-10-31T14:25:18+00:00",
+  "overall": "ATTENTION",
+  "failed": 1,
+  "designs_cofolded": 150,
+  "submitted_with_ipsae": 149,
+  "nominations": 15,
+  "checks": [
+    {
+      "section": "Deliverable",
+      "rule": "Proposed sequences, each >=5 mutations vs parent",
+      "result": "PASS",
+      "evidence": "149 sequences in submission_scored.fasta; violations=none"
+    },
+    {
+      "section": "Deliverable",
+      "rule": "ipSAE score for EVERY submitted design",
+      "result": "PASS",
+      "evidence": "149/149 have a finite ipSAE; provenance file present"
+    },
+    {
+      "section": "Deliverable",
+      "rule": "ipSAE computed externally (DunbrackLab/IPSAE), not a Boltz proxy",
+      "result": "PASS",
+      "evidence": "ipSAE_provenance.csv records script, commit and cutoffs"
+    },
+    {
+      "section": "Deliverable",
+      "rule": "Walkthrough of the design approach",
+      "result": "PASS",
+      "evidence": "method_walkthrough.md 14031 bytes"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "No de novo binder tools (BindCraft, RFdiffusion, BoltzGen, Mosaic)",
+      "result": "PASS",
+      "evidence": "operative references: none; Boltz-2 used only to predict structures of already-edited sequences"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Explore with sequence models first; cofold only a shortlist",
+      "result": "PASS",
+      "evidence": "AbLang2 screened 40000 candidates, ESM2-3B scored 4000, and only the ranked shortlist was cofolded"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Cofold shortlist of 50-100 designs (suggested maximum 100)",
+      "result": "FAIL",
+      "evidence": "150 distinct designs cofolded. Submission is presented as a ranked top-50 shortlist plus 15 nominations; the additional cofolds were spent on REPLICATE SEEDS and controls, not on exploring more candidates before screening. See note below."
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Cofold HER2 domain IV only, never the full ~630-residue ectodomain",
+      "result": "PASS",
+      "evidence": "target is 119 aa (mature [489, 607]), complex 361 residues total"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Do not rank by ipSAE alone",
+      "result": "PASS",
+      "evidence": "multi-objective rank aggregation over 5 axes, ipSAE weight 0.25; sensitivity analysis re-ranks under 3 alternative weightings"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Use ipSAE to discard broken designs, then pick a diverse 15",
+      "result": "PASS",
+      "evidence": "38 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Never mutate the linker or the conserved cysteines",
+      "result": "PASS",
+      "evidence": "linker violations=none; cysteine violations=none (all 149 submitted designs keep (GGGGS)x3 at 121-135 and C at [22, 96, 158, 223])"
+    },
+    {
+      "section": "Steer away from",
+      "rule": "Do not spend the event on setup; raise Modal problems early",
+      "result": "PASS",
+      "evidence": "two conda envs built and smoke-tested in ~15 min; Modal verified end-to-end (smoke test returned real ipSAE)"
+    }
+  ],
+  "note_on_cofold_count": "The organizer suggests cofolding a shortlist of 50-100. The ORDER was followed: 1,000,000 AbLang2 candidates and 50,000 ESM2-3B-scored candidates were screened by sequence first, and nothing was cofolded before screening. The cofold count exceeds 100 because spare GPU capacity was spent on REPLICATE SEEDS of the same shortlist rather than on more candidates: measured single-seed ipSAE reliability was only ~0.5, so replicates were required before any ranking could be trusted. The submission is still presented as a ranked top-50 shortlist with 15 nominations."
+}

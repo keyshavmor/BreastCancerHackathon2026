@@ -39,6 +39,11 @@ cd "$BASE"
 GPU="${GPU:-A10G}"
 PHASES="${PHASES:-A B C D}"
 BATCH="${BATCH:-10}"
+# Hard spend ceiling. Each phase is trimmed to what remains, and a phase that
+# cannot fit is skipped rather than overshooting. Deliberately set BELOW the real
+# budget because $/structure is an estimate; the authoritative figure is
+# modal.com/settings/usage.
+MAX_COST_USD="${MAX_COST_USD:-23.00}"
 DRY=0
 [ "${1:-}" = "--dry" ] && DRY=1
 
@@ -58,7 +63,7 @@ QUEUE[A]="outputs/submission_scored.csv";  SEEDS[A]="$A_SEEDS"; LIMIT[A]=149
 LABEL[A]="error bars on every submitted design (7 seeds)"
 QUEUE[B]="outputs/queue_sweep.csv";        SEEDS[B]="$B_SEEDS"; LIMIT[B]=240
 LABEL[B]="balanced mutation-count x branch sweep (5 seeds)"
-QUEUE[C]="outputs/queue_breadth.csv";      SEEDS[C]="$C_SEEDS"; LIMIT[C]=600
+QUEUE[C]="outputs/queue_breadth.csv";      SEEDS[C]="$C_SEEDS"; LIMIT[C]=450
 LABEL[C]="stratified breadth with replicates (5 seeds)"
 QUEUE[D]="outputs/top_15_scored.csv";      SEEDS[D]="$D_SEEDS"; LIMIT[D]=15
 LABEL[D]="deep replication of the lab nominees (20 seeds)"
@@ -111,18 +116,51 @@ if ! grep -qE "ipsae_min=" "logs/modal_smoke.log"; then
 fi
 echo ">>> smoke test OK"
 
+spent=0
 for p in $PHASES; do
   q="${QUEUE[$p]}"
   [ -f "$q" ] || { echo ">>> phase $p: queue missing, skipped"; continue; }
+
+  s_count=$(nseeds "${SEEDS[$p]}")
+  rows=$(( $(wc -l < "$q") - 1 ))
+  lim=${LIMIT[$p]}; [ "$rows" -lt "$lim" ] && lim=$rows
+
+  remaining=$(awk -v m="$MAX_COST_USD" -v s="$spent" 'BEGIN{printf "%.4f", m-s}')
+  max_struct=$(awk -v r="$remaining" -v c="$RATE_PER_STRUCT" 'BEGIN{printf "%d", r/c}')
+  want=$(( (lim + 1) * s_count ))
+
+  if [ "$max_struct" -le "$s_count" ]; then
+    echo ">>> PHASE $p SKIPPED - budget ceiling reached (spent ~$spent of $MAX_COST_USD)"
+    continue
+  fi
+  if [ "$want" -gt "$max_struct" ]; then
+    newlim=$(( max_struct / s_count - 1 ))
+    [ "$newlim" -lt 1 ] && newlim=1
+    echo ">>> PHASE $p trimmed: $lim -> $newlim designs to respect the $MAX_COST_USD ceiling"
+    lim=$newlim
+    want=$(( (lim + 1) * s_count ))
+  fi
+
   echo
   echo "=============================================================="
   echo ">>> PHASE $p  ${LABEL[$p]}   $(date -Is)"
+  echo ">>>   $lim designs x $s_count seeds = $want structures"
+  echo ">>>   budget: spent ~$spent / $MAX_COST_USD"
   echo "=============================================================="
   HER2_MODAL_GPU="$GPU" modal run "$APP" \
-    --queue "$q" --limit "${LIMIT[$p]}" --batch-size "$BATCH" \
+    --queue "$q" --limit "$lim" --batch-size "$BATCH" \
     --seeds "${SEEDS[$p]}" 2>&1 | tee "logs/modal_phase_${p}.log" | tail -25
-  echo ">>> phase $p finished rc=$? $(date -Is)"
+  rc=$?
+
+  actual=$(grep -a "^\[progress\]" "logs/modal_phase_${p}.log" | tail -1 \
+           | sed -nE 's/^\[progress\] ([0-9]+)\/.*/\1/p')
+  [ -z "$actual" ] && actual=$want
+  spent=$(awk -v s="$spent" -v a="$actual" -v c="$RATE_PER_STRUCT" 'BEGIN{printf "%.2f", s+a*c}')
+  echo ">>> phase $p finished rc=$rc structures=$actual cumulative ~$spent $(date -Is)"
 done
+echo
+echo ">>> campaign spend estimate: $spent of $MAX_COST_USD ceiling"
+echo ">>> authoritative spend: https://modal.com/settings/usage"
 
 echo
 echo ">>> pulling artifacts back for local scoring"

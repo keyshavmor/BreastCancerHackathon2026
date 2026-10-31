@@ -1,0 +1,115 @@
+{
+  "candidate_id": "HER2_2788",
+  "generated_utc": "2026-10-31T14:11:53.109929+00:00",
+  "sequence": {
+    "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKNTYIHWVRQAPGKGLEWVARIYGTNGYTRYADSVKGRFTISADTSKNTASLQMNSLRAEDTAVYYCSRWGGSGSNAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVNWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLRPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+    "length": 242,
+    "sha256": "606d410ead6487a96048852a1ee1ceec5c8a23535dd00f5c08f808ab11e0fd41",
+    "vh": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKNTYIHWVRQAPGKGLEWVARIYGTNGYTRYADSVKGRFTISADTSKNTASLQMNSLRAEDTAVYYCSRWGGSGSNAMDYWGQGTLVTVSS",
+    "linker": "GGGGSGGGGSGGGGS",
+    "vl": "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVNWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLRPEDFATYYCQQHYTTPPTFGQGTKVEIK",
+    "native_cysteines_preserved": true
+  },
+  "design": {
+    "branch": "A_h3",
+    "mutation_count": 8,
+    "mutations": [
+      "D31N",
+      "P53G",
+      "Y80S",
+      "D102S",
+      "F104S",
+      "Y105N",
+      "A169N",
+      "Q214R"
+    ],
+    "mutated_cdrs": [
+      "CDR-H1",
+      "CDR-H2",
+      "CDR-H3",
+      "CDR-L1",
+      "framework"
+    ],
+    "mutations_at_experimental_interface": [
+      "P53G",
+      "D102S",
+      "F104S",
+      "Y105N"
+    ],
+    "reconstructible_from_parent": true
+  },
+  "scores": {
+    "rank": "58",
+    "ipsae_min": "0.6099",
+    "ipsae_min_sd": "0.0",
+    "ipsae_max": "0.7963",
+    "ipsae_delta_vs_parent": "-0.0808",
+    "ipsae_interpretation": "SINGLE_SEED_UNRELIABLE",
+    "interface_status": "OK",
+    "n_seeds": "1",
+    "seeds": "42",
+    "iptm": "0.8759",
+    "pDockQ": "0.4147",
+    "LIS": "0.565",
+    "epitope_recovery": "0.9474",
+    "ablang2_contextual": "-0.7197",
+    "esm2_contextual": "-0.4002",
+    "sequence_consensus_score": "0.8768",
+    "rank_score": "0.5503",
+    "max_rank_shift_under_reweighting": "29"
+  },
+  "structure": {
+    "representative_run": "HER2_2788_seed42",
+    "representative_seed": "42",
+    "selection_rule": "replicate whose ipSAE is closest to the design mean",
+    "cif": "complex.cif",
+    "target": {
+      "description": "HER2 domain IV crop from 1N8Z chain C",
+      "mature_range": [
+        489,
+        607
+      ],
+      "uniprot_range": [
+        511,
+        629
+      ],
+      "sequence": "CHQLCARGHCWGPGPTQCVNCSQFLRGQECVEECRVLQGLPREYVNARHCLPCHPECQPQNGSVTCFGPEADQCVACAHYKDPPFCVARCPSGVKPDLSYMPIWKFPDEEGACQPCPIN"
+    },
+    "modelled_interface": {
+      "n_contacts": 29,
+      "her2_residues_contacted_mature": [
+        558,
+        560,
+        561,
+        571,
+        572,
+        573,
+        584,
+        585,
+        586,
+        589,
+        591,
+        593,
+        598,
+        602,
+        603
+      ],
+      "experimental_epitope_recovered": [
+        558,
+        560,
+        561,
+        571,
+        572,
+        573,
+        591,
+        593,
+        598,
+        602,
+        603
+      ],
+      "experimental_epitope_total": 19,
+      "recovery_fraction": 0.5789
+    }
+  },
+  "claim_boundary": "Scores are computational ranking signals for experimental triage. No K_D is predicted or implied."
+}

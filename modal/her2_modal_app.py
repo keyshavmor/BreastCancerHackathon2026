@@ -381,22 +381,44 @@ def main(queue: str = "outputs/priority_cofold_queue_merged.csv",
     print("[modal] run populate_cache first if you have not: "
           "modal run modal/her2_modal_app.py::populate_cache")
 
+    # Stream results as each container finishes rather than collecting the whole
+    # map first: a 70-minute campaign must be observable while it runs. Lines are
+    # fixed-format and flushed so modal_progress.sh can parse them from a tee'd
+    # log.
+    COST_PER_STRUCT = 0.0046     # ~15 s/structure at ~$1.10/GPU-hour (A10G)
     t0 = time.time()
-    results = list(cofold_batch.map(jobs, order_outputs=False))
+    results: list[dict] = []
+    completed = 0
+    print(f"[progress] 0/{total} structures 0.0% elapsed=0.0min cost=$0.00", flush=True)
+    for r in cofold_batch.map(jobs, order_outputs=False):
+        results.append(r)
+        completed += r["completed"]
+        el = (time.time() - t0) / 60
+        pct = 100.0 * completed / max(1, total)
+        rate = completed / max(1e-9, el)                  # structures per minute
+        eta = (total - completed) / rate if rate > 0 else float("nan")
+        status = "ok" if r["returncode"] == 0 and not r["missing"] else "FAIL"
+        print(f"[batch] {r['batch_id']} {status} {r['completed']}/{r['requested']} "
+              f"{r['seconds']}s ({r.get('seconds_per_structure')}s/struct)", flush=True)
+        print(f"[progress] {completed}/{total} structures {pct:.1f}% "
+              f"elapsed={el:.1f}min eta={eta:.1f}min "
+              f"rate={rate:.1f}/min cost=${completed*COST_PER_STRUCT:.2f} "
+              f"batches={len(results)}/{len(jobs)}", flush=True)
+        if status == "FAIL" and r.get("stderr_tail"):
+            print(f"[fail] {r['batch_id']} rc={r['returncode']} "
+                  f"missing={len(r['missing'])}: {r['stderr_tail'][-300:]}", flush=True)
     wall = time.time() - t0
 
-    completed = sum(r["completed"] for r in results)
     failed = [r for r in results if r["returncode"] != 0 or r["missing"]]
     rates = [r["seconds_per_structure"] for r in results if r.get("seconds_per_structure")]
-    print(f"\n[modal] {completed}/{total} structures in {wall/60:.1f} min wall-clock")
+    print(f"\n[modal] {completed}/{total} structures in {wall/60:.1f} min wall-clock", flush=True)
+    print(f"[modal] est. cost ${completed*COST_PER_STRUCT:.2f}", flush=True)
     if rates:
+        eff_containers = (sum(rates) / max(1e-9, wall)) if wall else 0
         print(f"[modal] mean {sum(rates)/len(rates):.1f} s/structure per container; "
-              f"effective {wall/max(1,completed):.2f} s/structure with "
-              f"{len(jobs)} parallel containers")
-    for r in failed:
-        print(f"  [FAIL] {r['batch_id']} rc={r['returncode']} missing={len(r['missing'])}")
-        if r.get("stderr_tail"):
-            print(f"         {r['stderr_tail'][-400:]}")
+              f"effective {wall/max(1,completed):.2f} s/structure; "
+              f"~{eff_containers:.1f} containers of parallelism", flush=True)
+    print(f"[modal] batches ok={len(results)-len(failed)} failed={len(failed)}", flush=True)
 
     if score and completed:
         names = [d["name"] for j in jobs for d in j["designs"]]

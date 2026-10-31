@@ -226,7 +226,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     here = Path(__file__).resolve().parent
     base = here.parent
-    ap.add_argument("--run-dir", type=Path, default=base / "pipeline_runs" / "her2_cofold")
+    ap.add_argument("--run-dir", type=Path, nargs="+",
+                    default=[base / "pipeline_runs" / "her2_cofold"],
+                    help="one or more Boltz run directories. Results from local and Modal "
+                         "campaigns are pooled here, so replicate seeds computed in different "
+                         "places combine into a single per-design estimate.")
     ap.add_argument("--outdir", type=Path, default=base / "outputs")
     ap.add_argument("--contract", type=Path, default=base / "outputs" / "contract.json")
     ap.add_argument("--ipsae", type=Path, default=IPSAE_DEFAULT)
@@ -247,15 +251,25 @@ def main() -> int:
           f"({'direct <=4.5A' if tgt.get('epitope_direct_mature') else 'near <=8A fallback'})")
     crop_start = tgt["domain_iv_mature"][0]
 
-    preds = sorted({p for p in (args.run_dir / "out").glob("boltz_results_*/predictions/*")
-                    if p.is_dir()})
+    preds: list[Path] = []
+    for rd in args.run_dir:
+        found = sorted({p for p in (rd / "out").glob("boltz_results_*/predictions/*")
+                        if p.is_dir()})
+        if found:
+            print(f"[scan] {len(found)} predictions under {rd}")
+        preds.extend(found)
     jobs = []
+    seen_names: set[str] = set()
     for p in preds:
         name = p.name
+        # A design+seed computed in two places is the same measurement; keep one.
+        if name in seen_names:
+            continue
         if (p / f"{name}_model_0.cif").is_file():
+            seen_names.add(name)
             jobs.append((name, str(p), str(args.ipsae), args.pae_cutoff, args.dist_cutoff,
                          args.python_exe, epitope, crop_start))
-    print(f"[scan] {len(jobs)} completed predictions under {args.run_dir}")
+    print(f"[scan] {len(jobs)} unique completed predictions total")
     if not jobs:
         raise SystemExit("no completed predictions to score")
 

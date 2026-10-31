@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-10-31T13:39:24.710342+00:00",
-  "predictions_found": 193,
-  "ipsae_passed": 193,
+  "generated_utc": "2026-10-31T13:58:31.555686+00:00",
+  "predictions_found": 261,
+  "ipsae_passed": 261,
   "ipsae_failed": [],
   "pae_cutoff_A": 10.0,
   "distance_cutoff_A": 15.0,
