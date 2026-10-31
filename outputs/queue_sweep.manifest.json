@@ -1,0 +1,41 @@
+{
+  "generated_utc": "2026-10-31T13:53:11.654255+00:00",
+  "mode": "sweep",
+  "source": "/home/mandalorian/Hackathons/BreastCancerHackathon2026/outputs/round2/esm_shortlist.csv",
+  "per_cell": 15,
+  "total": 240,
+  "mutation_mix": {
+    "5": 60,
+    "6": 60,
+    "7": 60,
+    "8": 60
+  },
+  "branch_mix": {
+    "A_h3": 60,
+    "B_interface": 60,
+    "C_mixed": 60,
+    "D_framework": 60
+  },
+  "cell_availability": {
+    "5:A_h3": 4682,
+    "5:B_interface": 5191,
+    "5:C_mixed": 2775,
+    "5:D_framework": 1844,
+    "6:A_h3": 3396,
+    "6:B_interface": 3565,
+    "6:C_mixed": 4268,
+    "6:D_framework": 5053,
+    "7:A_h3": 2353,
+    "7:B_interface": 2226,
+    "7:C_mixed": 3392,
+    "7:D_framework": 3578,
+    "8:A_h3": 2069,
+    "8:B_interface": 1518,
+    "8:C_mixed": 2065,
+    "8:D_framework": 2025
+  },
+  "excluded_sources": [
+    "../outputs/submission_scored.csv"
+  ],
+  "rationale": "balanced designed experiment to measure the mutation-count curve "
+}
