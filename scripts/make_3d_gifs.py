@@ -175,6 +175,8 @@ def main() -> int:
     ap.add_argument("--outdir", type=Path, default=None)
     ap.add_argument("--cif", type=Path, default=None, help="render one file and exit")
     ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--title", default=None, help="slide title for --cif mode")
+    ap.add_argument("--subtitle", default="", help="slide subtitle for --cif mode")
     ap.add_argument("--parent", action="store_true",
                     help="also render the parent complex for side-by-side comparison")
     args = ap.parse_args()
@@ -182,8 +184,8 @@ def main() -> int:
 
     if args.cif:
         ok = render_gif(args.cif, args.out or (outdir / (args.cif.stem + ".gif")),
-                        title=args.cif.stem, frames=args.frames,
-                        size=(args.size, args.size))
+                        title=args.title or args.cif.stem, subtitle=args.subtitle,
+                        frames=args.frames, size=(args.size, args.size))
         return 0 if ok else 1
 
     designs = []
