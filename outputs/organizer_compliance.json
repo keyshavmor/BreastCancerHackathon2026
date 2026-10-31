@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-31T15:24:52+00:00",
+  "generated_utc": "2026-10-31T15:34:15+00:00",
   "overall": "ATTENTION",
   "failed": 1,
   "designs_cofolded": 250,
@@ -28,7 +28,7 @@
       "section": "Deliverable",
       "rule": "Walkthrough of the design approach",
       "result": "PASS",
-      "evidence": "method_walkthrough.md 42098 bytes"
+      "evidence": "method_walkthrough.md 41900 bytes"
     },
     {
       "section": "Steer away from",
@@ -64,7 +64,7 @@
       "section": "Steer away from",
       "rule": "Use ipSAE to discard broken designs, then pick a diverse 15",
       "result": "PASS",
-      "evidence": "24 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
+      "evidence": "21 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
     },
     {
       "section": "Steer away from",
