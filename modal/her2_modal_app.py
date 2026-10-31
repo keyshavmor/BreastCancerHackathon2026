@@ -123,31 +123,54 @@ def populate_cache(force: bool = False) -> dict:
     instead of re-downloading ~3 GB, which is what keeps the bill proportional to
     GPU time rather than to container count.
     """
-    conf = pathlib.Path(CACHE_DIR) / "boltz2_conf.ckpt"
+    cache = pathlib.Path(CACHE_DIR)
+    cache.mkdir(parents=True, exist_ok=True)
+    conf = cache / "boltz2_conf.ckpt"
     if conf.exists() and not force:
-        have = sorted(p.name for p in pathlib.Path(CACHE_DIR).iterdir())
+        have = sorted(p.name for p in cache.iterdir())
         return {"status": "already_populated", "entries": have}
 
-    # A trivial 2-residue prediction is the cheapest way to make boltz fetch
-    # everything it needs into --cache.
-    work = pathlib.Path("/tmp/warm")
-    work.mkdir(parents=True, exist_ok=True)
-    (work / "warm.yaml").write_text(
-        "version: 1\nsequences:\n  - protein:\n      id: A\n"
-        "      sequence: GGGGSGGGGS\n      msa: empty\n"
-    )
+    # Use boltz's own downloader rather than triggering it via a dummy
+    # prediction: it is the supported entry point, needs no GPU, and cannot fail
+    # for an unrelated inference reason.
     t0 = time.time()
-    proc = subprocess.run(
-        ["boltz", "predict", str(work / "warm.yaml"), "--out_dir", "/tmp/warm_out",
-         "--cache", CACHE_DIR, "--accelerator", "cpu", "--diffusion_samples", "1",
-         "--recycling_steps", "1", "--sampling_steps", "10"],
-        capture_output=True, text=True,
-    )
+    err = ""
+    try:
+        from boltz.main import download_boltz2
+
+        download_boltz2(cache)
+    except Exception as exc:                                     # noqa: BLE001
+        err = f"{type(exc).__name__}: {exc}"
+
+    # Fallback: a tiny CPU prediction also pulls whatever is still missing.
+    if not conf.exists():
+        work = pathlib.Path("/tmp/warm")
+        work.mkdir(parents=True, exist_ok=True)
+        (work / "warm.yaml").write_text(
+            "version: 1\nsequences:\n  - protein:\n      id: A\n"
+            "      sequence: GGGGSGGGGS\n      msa: empty\n"
+        )
+        proc = subprocess.run(
+            ["boltz", "predict", str(work / "warm.yaml"), "--out_dir", "/tmp/warm_out",
+             "--cache", CACHE_DIR, "--accelerator", "cpu", "--diffusion_samples", "1",
+             "--recycling_steps", "1", "--sampling_steps", "10"],
+            capture_output=True, text=True,
+        )
+        err = (err + " | fallback_rc=" + str(proc.returncode)
+               + " " + proc.stderr[-800:]).strip()
+
     cache_vol.commit()
-    entries = sorted(p.name for p in pathlib.Path(CACHE_DIR).iterdir())
-    return {"status": "populated", "seconds": round(time.time() - t0, 1),
-            "returncode": proc.returncode, "entries": entries,
-            "stderr_tail": proc.stderr[-1500:]}
+    entries = sorted(p.name for p in cache.iterdir())
+    mols = cache / "mols"
+    return {
+        "status": "populated" if conf.exists() else "FAILED",
+        "seconds": round(time.time() - t0, 1),
+        "conf_ckpt_present": conf.exists(),
+        "conf_ckpt_mb": round(conf.stat().st_size / 2**20, 1) if conf.exists() else 0,
+        "mols_present": mols.exists(),
+        "entries": entries,
+        "error": err,
+    }
 
 
 # ---------------------------------------------------------------------------
