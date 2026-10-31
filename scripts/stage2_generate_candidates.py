@@ -308,6 +308,9 @@ def main() -> int:
                     help="candidate_id namespace. MUST differ between generation rounds: "
                          "ids are assigned by rank, so reusing a prefix would bind an "
                          "already-cofolded id to a different sequence.")
+    ap.add_argument("--max-all-candidates-rows", type=int, default=100000,
+                    help="cap rows written to all_candidates.csv (0 = unlimited). A 1M-row "
+                         "dump is ~390 MB; downstream stages only read the shortlist.")
     ap.add_argument("--diverse-shortlist-max", type=int, default=2000,
                     help="above this per-branch size, take top-by-score instead of "
                          "farthest-point selection (which costs O(k*pool_cap))")
@@ -448,10 +451,19 @@ def main() -> int:
             "full_scfv_sequence": d["sequence"],
         }
 
+    # A 1,000,000-row dump is ~390 MB and has little analytical value beyond its
+    # head: everything downstream consumes the shortlist. Write the score-ordered
+    # top slice and record the truncation in the manifest.
+    kept_sorted = sorted(kept, key=lambda x: -x["ablang2_additive_mean"])
+    all_rows = kept_sorted if args.max_all_candidates_rows <= 0 \
+        else kept_sorted[: args.max_all_candidates_rows]
     with open(args.outdir / "all_candidates.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
         w.writeheader()
-        w.writerows(row_of(d) for d in kept)
+        w.writerows(row_of(d) for d in all_rows)
+    if len(all_rows) < len(kept):
+        print(f"[storage] all_candidates.csv truncated to top {len(all_rows)} of "
+              f"{len(kept)} (raise --max-all-candidates-rows, 0 = unlimited)")
 
     with open(args.outdir / "esm_shortlist.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
@@ -481,6 +493,9 @@ def main() -> int:
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "seed": args.seed, "pool_size_requested": args.pool_size,
         "candidates_kept": len(kept), "shortlist": len(shortlist), "provisional_50": len(prov),
+        "all_candidates_rows_written": len(all_rows),
+        "all_candidates_truncated": len(all_rows) < len(kept),
+        "id_prefix": args.id_prefix,
         "attempts": attempts, "rejects": dict(reject),
         "anchor_cutoff_A": args.anchor_cutoff, "frozen_anchors": pools["anchors"],
         "pool_sizes": {k: len(pools[k]) for k in ("h3", "paratope", "other_cdr", "framework")},

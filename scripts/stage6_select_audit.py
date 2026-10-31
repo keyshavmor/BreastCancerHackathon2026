@@ -184,6 +184,73 @@ def main() -> int:
     if not rows:
         raise SystemExit("no ipSAE-complete candidates; refusing to write a submission")
 
+    # ---- do the sequence-stage scores predict anything structural? -------- #
+    # This is a diagnostic, not a filter, and it is computed every run because
+    # the answer governs how the next round should select candidates. In round 1
+    # every sequence score came out NEGATIVELY correlated with interface quality
+    # (see requeue_structure_informed.py), which is why selection must not simply
+    # maximise sequence plausibility.
+    def spearman(xs: list, ys: list) -> tuple[float | None, int]:
+        pairs = [(x, y) for x, y in zip(xs, ys)
+                 if x is not None and y is not None
+                 and np.isfinite(x) and np.isfinite(y)]
+        if len(pairs) < 8:
+            return None, len(pairs)
+        a = np.asarray([p[0] for p in pairs], float)
+        b = np.asarray([p[1] for p in pairs], float)
+        ra = a.argsort().argsort().astype(float)
+        rb = b.argsort().argsort().astype(float)
+        if ra.std() == 0 or rb.std() == 0:
+            return None, len(pairs)
+        return float(np.corrcoef(ra, rb)[0, 1]), len(pairs)
+
+    predictors = {
+        "ablang2_contextual": [fnum(meta_of[r["candidate_id"]].get("ablang2_contextual")) for r in rows],
+        "esm2_contextual": [fnum(meta_of[r["candidate_id"]].get("esm2_contextual")) for r in rows],
+        "ablang2_additive_mean": [fnum(meta_of[r["candidate_id"]].get("ablang2_additive_mean")) for r in rows],
+        "esm2_additive_mean": [fnum(meta_of[r["candidate_id"]].get("esm2_additive_mean")) for r in rows],
+        "sequence_consensus_score": [r["sequence_consensus_score"] for r in rows],
+        "mutation_count": [float(r["mutation_count"]) for r in rows],
+    }
+    targets = {"ipsae_min": [r["ipsae_min"] for r in rows],
+               "epitope_recovery": [r["epitope_recovery"] for r in rows],
+               "iptm": [r["iptm"] for r in rows]}
+    diag: dict[str, dict] = {"n_scored": len(rows), "spearman": {}}
+    for pn, pv in predictors.items():
+        diag["spearman"][pn] = {}
+        for tn, tv in targets.items():
+            rho, n = spearman(pv, tv)
+            diag["spearman"][pn][tn] = {"rho": None if rho is None else round(rho, 4), "n": n}
+
+    # Per-stratum means, which is how the mutation-count effect was spotted.
+    def group_means(key_fn) -> dict:
+        g: dict = {}
+        for r in rows:
+            g.setdefault(key_fn(r), []).append(r)
+        return {str(k): {
+            "n": len(v),
+            "ipsae_min_mean": round(statistics.fmean([x["ipsae_min"] for x in v]), 4),
+            "ipsae_min_sd": round(statistics.stdev([x["ipsae_min"] for x in v]), 4) if len(v) > 1 else 0.0,
+            "iptm_mean": round(statistics.fmean([x["iptm"] for x in v if x["iptm"] is not None]), 4)
+                         if any(x["iptm"] is not None for x in v) else None,
+            "epitope_recovery_mean": round(statistics.fmean(
+                [x["epitope_recovery"] for x in v if x["epitope_recovery"] is not None]), 4)
+                if any(x["epitope_recovery"] is not None for x in v) else None,
+        } for k, v in sorted(g.items(), key=lambda kv: str(kv[0]))}
+
+    diag["by_mutation_count"] = group_means(lambda r: r["mutation_count"])
+    diag["by_branch"] = group_means(lambda r: r["branch"])
+    diag["parent_reference"] = {"ipsae_min": parent_ipsae, "epitope_recovery": parent_recov}
+    diag["interpretation"] = (
+        "Negative rho means a HIGHER sequence-plausibility score goes with a WORSE modelled "
+        "interface. Trastuzumab's CDRs are affinity-matured, so an antibody language model "
+        "tends to propose reverting them toward germline consensus - precisely the residues "
+        "contacting HER2. The mutation_count effect is partly confounded by MSA reuse."
+    )
+    (out / "score_diagnostics.json").write_text(json.dumps(diag, indent=2))
+    print(f"[diagnostics] sequence-vs-structure correlations written "
+          f"(n={len(rows)}); see score_diagnostics.json")
+
     # ---- rank aggregation -------------------------------------------------- #
     axes = {
         "sequence_consensus": pct_rank([r["sequence_consensus_score"] for r in rows]),

@@ -309,6 +309,61 @@ def main() -> int:
       "ipSAE.")
     A("")
 
+    # ------------------------------------------------- score diagnostics
+    diag = load_json(o / "score_diagnostics.json")
+    if diag.get("spearman"):
+        A("## 6b. Do the sequence scores predict the structure? (measured each run)")
+        A("")
+        A("Spearman rank correlation between each sequence-stage predictor and each "
+          f"structural outcome, over n={diag.get('n_scored')} ipSAE-complete designs.")
+        A("")
+        tnames = ["ipsae_min", "epitope_recovery", "iptm"]
+        A("| Predictor | " + " | ".join(tnames) + " |")
+        A("| --- | " + " | ".join("---:" for _ in tnames) + " |")
+        for pn, tv in diag["spearman"].items():
+            cells = []
+            for tn in tnames:
+                e = tv.get(tn, {})
+                cells.append("n/a" if e.get("rho") is None else f"{e['rho']:+.3f}")
+            A(f"| `{pn}` | " + " | ".join(cells) + " |")
+        A("")
+        A(f"**Interpretation.** {diag.get('interpretation','')}")
+        A("")
+        A("This is the single most consequential empirical result of the run: it means "
+          "selecting candidates by maximising sequence plausibility optimises a proxy that "
+          "points **away** from interface quality. Later rounds therefore use sequence "
+          "consensus as a floor (reject the implausible tail) rather than as a maximand, and "
+          "stratify the structural budget by mutation count and branch instead "
+          "(`requeue_structure_informed.py`).")
+        A("")
+        if diag.get("by_mutation_count"):
+            A("### By mutation count")
+            A("")
+            A("| Mutations | n | ipSAE_min | ipTM | Epitope recovery |")
+            A("| ---: | ---: | ---: | ---: | ---: |")
+            for k, v in diag["by_mutation_count"].items():
+                A(f"| {k} | {v['n']} | {fmt(v['ipsae_min_mean'])} +/- {fmt(v['ipsae_min_sd'],3)} "
+                  f"| {fmt(v['iptm_mean'],3)} | {fmt(v['epitope_recovery_mean'],3)} |")
+            pr = diag.get("parent_reference", {})
+            A(f"| *parent* | - | *{fmt(pr.get('ipsae_min'))}* | - "
+              f"| *{fmt(pr.get('epitope_recovery'),3)}* |")
+            A("")
+        if diag.get("by_branch"):
+            A("### By branch")
+            A("")
+            A("| Branch | n | ipSAE_min | ipTM | Epitope recovery |")
+            A("| --- | ---: | ---: | ---: | ---: |")
+            for k, v in diag["by_branch"].items():
+                A(f"| `{k}` | {v['n']} | {fmt(v['ipsae_min_mean'])} | {fmt(v['iptm_mean'],3)} "
+                  f"| {fmt(v['epitope_recovery_mean'],3)} |")
+            A("")
+            A("Note this **contradicts the premise** that CDR-H3 maturation is the strongest "
+              "branch: the published evidence for H3-focused editing came from a different "
+              "parent and a different assay. Here framework-biased edits best preserve the "
+              "modelled interface. We report the discrepancy rather than suppressing it, and "
+              "keep all four branches represented in the submission.")
+            A("")
+
     # -------------------------------------------------------------- selection
     A("## 7. Selection: multi-objective and diversity-aware")
     A("")

@@ -14,13 +14,15 @@ models/
 *.pth
 
 # Large generated intermediates. The curated deliverables below are kept.
-outputs/all_candidates.csv
-outputs/esm_shortlist.csv
-outputs/esm_shortlist.fasta
-outputs/mutation_site_prior.csv
-outputs/esm2_site_prior.csv
-outputs/model_scores.csv
-outputs/boltz_results_raw.csv
+# Globs (not just top level): generation rounds live in outputs/roundN/ and a
+# 1M-candidate dump is ~390 MB, well over GitHub's 100 MB per-file limit.
+**/all_candidates.csv
+**/esm_shortlist.csv
+**/esm_shortlist.fasta
+**/mutation_site_prior.csv
+**/esm2_site_prior.csv
+**/model_scores.csv
+**/boltz_results_raw.csv
 
 # Cached MSAs (~5 MB, but regenerable with one bootstrap_msa_cache.py call).
 outputs/msa_cache/

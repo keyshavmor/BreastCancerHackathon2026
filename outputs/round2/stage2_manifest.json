@@ -1,0 +1,58 @@
+{
+  "generated_utc": "2026-10-31T13:19:22.460846+00:00",
+  "seed": 20261031,
+  "pool_size_requested": 1000000,
+  "candidates_kept": 1000000,
+  "shortlist": 50000,
+  "provisional_50": 50,
+  "attempts": 1072232,
+  "rejects": {
+    "introduces 1 new N-X-S/T sequon(s)": 70763,
+    "introduces 2 new N-X-S/T sequon(s)": 1408,
+    "duplicate_sequence": 55,
+    "introduces 3 new N-X-S/T sequon(s)": 6
+  },
+  "anchor_cutoff_A": 3.0,
+  "frozen_anchors": [
+    50,
+    103,
+    165,
+    226,
+    227,
+    229
+  ],
+  "pool_sizes": {
+    "h3": 10,
+    "paratope": 28,
+    "other_cdr": 19,
+    "framework": 160
+  },
+  "branch_slots": {
+    "A_h3": 20,
+    "B_interface": 12,
+    "C_mixed": 10,
+    "D_framework": 8
+  },
+  "top_k_per_site": 5,
+  "mutation_band": [
+    5,
+    8
+  ],
+  "ablang2_model": "ablang2-paired",
+  "ablang2_load_s": 0.7,
+  "site_scan_s": 0.7,
+  "branch_counts": {
+    "B_interface": 250000,
+    "A_h3": 250000,
+    "C_mixed": 250000,
+    "D_framework": 250000
+  },
+  "mutation_count_hist": {
+    "5": 207750,
+    "6": 266842,
+    "7": 274547,
+    "8": 250861
+  },
+  "total_runtime_s": 514.7,
+  "note": "AbLang2 scores are antibody-plausibility priors; the model never sees HER2."
+}
