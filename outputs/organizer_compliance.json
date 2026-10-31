@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-31T15:34:15+00:00",
+  "generated_utc": "2026-10-31T15:47:15+00:00",
   "overall": "ATTENTION",
   "failed": 1,
   "designs_cofolded": 250,
@@ -28,7 +28,7 @@
       "section": "Deliverable",
       "rule": "Walkthrough of the design approach",
       "result": "PASS",
-      "evidence": "method_walkthrough.md 41900 bytes"
+      "evidence": "method_walkthrough.md 41844 bytes"
     },
     {
       "section": "Steer away from",

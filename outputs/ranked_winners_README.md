@@ -1,6 +1,6 @@
 # ranked_winners.csv
 
-Generated 2026-10-31T15:44:25+00:00 - 50 designs in final rank order.
+Generated 2026-10-31T15:47:12+00:00 - 50 designs in final rank order.
 
 Every row is a compliant scFv variant of the trastuzumab parent with a genuine,
 externally computed ipSAE. Columns read left to right as identity, sequence and

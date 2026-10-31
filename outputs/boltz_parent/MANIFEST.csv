@@ -1,2 +1,2 @@
 candidate_id,structure_file,pae_file,representative_seed,ipsae_min_this_seed,ipsae_min_mean_all_seeds,ipsae_min_sd_all_seeds,n_seeds,selection_rule
-parent,parent.cif,parent_pae.npz,8008,0.7004,0.6995,0.055,41,seed closest to the design mean
+parent,parent.cif,parent_pae.npz,8008,0.7004,0.7003,0.0546,42,seed closest to the design mean

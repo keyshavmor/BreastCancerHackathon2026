@@ -1,15 +1,15 @@
 {
-  "generated_utc": "2026-10-31T15:44:24.146308+00:00",
-  "predictions_found": 2423,
-  "ipsae_passed": 2423,
+  "generated_utc": "2026-10-31T15:47:11.816432+00:00",
+  "predictions_found": 2432,
+  "ipsae_passed": 2432,
   "ipsae_failed": [],
   "pae_cutoff_A": 10.0,
   "distance_cutoff_A": 15.0,
   "ipsae_commit": "6174cf9e71cb1bd660cc805856a18c4871a6dec3",
   "parent_baseline": {
-    "n_seeds": 41,
-    "ipsae_min_mean": 0.6995371707317073,
-    "ipsae_min_sd": 0.055034655981891285
+    "n_seeds": 42,
+    "ipsae_min_mean": 0.7002742857142857,
+    "ipsae_min_sd": 0.054568856313650105
   },
   "candidates_with_scores": 250,
   "note": "ipSAE computed externally by DunbrackLab/IPSAE from Boltz full PAE + mmCIF. Boltz confidence fields are reported as context and are NOT ipSAE."

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-31T15:44:24.888589+00:00",
+  "generated_utc": "2026-10-31T15:47:12.559449+00:00",
   "overall": "PASS",
   "failed_checks": 0,
   "submitted_scored_count": 248,
@@ -7,16 +7,16 @@
   "excluded_count": 2,
   "seed_noise_ipsae_sd": 0.1003,
   "parent_baseline": {
-    "ipsae_min": 0.6995,
-    "sd": 0.055,
-    "epitope_recovery": 0.9705
+    "ipsae_min": 0.7003,
+    "sd": 0.0546,
+    "epitope_recovery": 0.9712
   },
   "designs_above_parent_beyond_noise": 0,
   "designs_single_seed_unreliable": 0,
   "interpretation_counts": {
     "ABOVE_PARENT": 0,
-    "BELOW_PARENT": 110,
-    "WITHIN_SEED_NOISE": 138,
+    "BELOW_PARENT": 111,
+    "WITHIN_SEED_NOISE": 137,
     "SINGLE_SEED_UNRELIABLE": 0,
     "NO_PARENT_BASELINE": 0
   },
@@ -79,7 +79,7 @@
     {
       "check": "parent_baseline_scored",
       "result": "PASS",
-      "detail": "parent ipsae_min=0.6995 over 41 seed(s)"
+      "detail": "parent ipsae_min=0.7003 over 42 seed(s)"
     },
     {
       "check": "no_stale_EGFR_cetuximab_inputs",

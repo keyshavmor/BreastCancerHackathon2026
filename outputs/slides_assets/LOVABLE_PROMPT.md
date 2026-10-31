@@ -24,7 +24,7 @@ shadows. Every slide that shows a number shows its uncertainty.
 ## Slides
 
 **1 — Title.** "Optimising a trastuzumab scFv against HER2 domain IV".
-Subtitle: 248 designs, 2178 structures,
+Subtitle: 248 designs, 2432 structures,
 every design carrying a genuine ipSAE. Background: `gifs/parent.gif`, subtle.
 
 **2 — The problem.** The parent is Herceptin at **0.82 pM** — one of the most
@@ -45,42 +45,42 @@ mismatches**. Use `figures/07_epitope_vs_ipsae.png`.
 15 nominated. Emphasise: sequence models explore, Boltz-2
 only confirms.
 
-**5 — Throughput.** 2178 Boltz-2 structures
-(611 local on a single 1x RTX 3090 24 GB,
-1567 on Modal for about
-$7.21). Key engineering: **one** MSA-server call total,
+**5 — Throughput.** 2432 Boltz-2 structures
+(629 local on a single 1x RTX 3090 24 GB,
+1803 on Modal for about
+$8.29). Key engineering: **one** MSA-server call total,
 cached and reused, instead of ~100 s per design. Use
 `figures/09_throughput.png`.
 
 **6 — The measurement problem (the pivotal slide).** A single Boltz-2 seed
-carries reliability **0.5** — about half of a
-one-seed ranking is noise. 5 seeds are needed for
+carries reliability **0.504** — about half of a
+one-seed ranking is noise. 4 seeds are needed for
 0.8. We replicated instead of broadening: median
 **8 seeds per design**, parent at
-**35 seeds**. Use `figures/05_reliability.png` and
+**42 seeds**. Use `figures/05_reliability.png` and
 `figures/04_replicate_spread.png`.
 
 **7 — Guarding against false positives.** 249 designs were
 tested. At an uncorrected α=0.05 about
 **12.5** would clear |t|>2 by chance.
-Uncorrected count: 10. After Benjamini-Hochberg:
-**8**. State plainly that reporting the uncorrected number
+Uncorrected count: 11. After Benjamini-Hochberg:
+**7**. State plainly that reporting the uncorrected number
 would have been wrong.
 
-**8 — Results.** Parent **0.6973 ± 0.0583**
-over 35 seeds. Designs significantly above after correction:
-**8**. Significantly below: 126 — the
+**8 — Results.** Parent **0.7003 ± 0.0546**
+over 42 seeds. Designs significantly above after correction:
+**7**. Significantly below: 135 — the
 screen discriminates. Render `ranking_table.md`, highlighting FDR-significant
 rows in green.
 
 **9 — The winners.** One card per design, each with its rotating GIF:
 
-- **HER2_1238** — 5 substitutions, ipSAE 0.7368 ± 0.0367 over 33 seeds, Δ 0.0394 vs parent, q=0.00469, epitope recovery 0.9171
-- **HER2_13625** — 8 substitutions, ipSAE 0.7478 ± 0.0222 over 32 seeds, Δ 0.0505 vs parent, q=0.0001, epitope recovery 0.9359
-- **HER2_17118** — 6 substitutions, ipSAE 0.7308 ± 0.0314 over 16 seeds, Δ 0.0335 vs parent, q=0.02428, epitope recovery 0.9704
-- **HER2_18216** — 7 substitutions, ipSAE 0.7267 ± 0.0301 over 15 seeds, Δ 0.0294 vs parent, q=0.04755, epitope recovery 0.9333
-- **HER2_17641** — 8 substitutions, ipSAE 0.7587 ± 0.0356 over 15 seeds, Δ 0.0614 vs parent, q=0.00028, epitope recovery 0.8702
-- **HER2_14514** — 6 substitutions, ipSAE 0.7546 ± 0.0175 over 17 seeds, Δ 0.0573 vs parent, q=0.0, epitope recovery 0.9164
+- **HER2_1238** — 5 substitutions, ipSAE 0.737 ± 0.0386 over 39 seeds, Δ 0.0367 vs parent, q=0.00242, epitope recovery 0.9177
+- **HER2_13625** — 8 substitutions, ipSAE 0.7487 ± 0.0231 over 38 seeds, Δ 0.0484 vs parent, q=0.0, epitope recovery 0.9363
+- **HER2_17118** — 6 substitutions, ipSAE 0.7291 ± 0.0325 over 23 seeds, Δ 0.0288 vs parent, q=0.02152, epitope recovery 0.9497
+- **HER2_18216** — 7 substitutions, ipSAE 0.7269 ± 0.0274 over 22 seeds, Δ 0.0266 vs parent, q=0.0247, epitope recovery 0.9187
+- **HER2_17641** — 8 substitutions, ipSAE 0.75 ± 0.0414 over 22 seeds, Δ 0.0497 vs parent, q=0.00065, epitope recovery 0.8588
+- **HER2_14514** — 6 substitutions, ipSAE 0.7568 ± 0.0163 over 23 seeds, Δ 0.0565 vs parent, q=0.0, epitope recovery 0.913
 
 **10 — What the data overturned.** Three findings that contradicted our
 starting assumptions:
