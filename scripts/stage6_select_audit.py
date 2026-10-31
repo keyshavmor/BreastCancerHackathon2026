@@ -95,6 +95,8 @@ def main() -> int:
     base = here.parent
     ap.add_argument("--outdir", type=Path, default=base / "outputs")
     ap.add_argument("--top-n", type=int, default=15)
+    ap.add_argument("--top-50", type=int, default=50,
+                    help="also emit this many top-ranked fully scored designs")
     ap.add_argument("--min-epitope-recovery", type=float, default=MIN_EPITOPE_RECOVERY)
     args = ap.parse_args()
     out = args.outdir
@@ -265,6 +267,14 @@ def main() -> int:
 
     write_set("submission_scored", rows)
     write_set("top_15_scored", chosen)
+    # The brief asks for a 50-proposal pool. internal_50_candidates.* (stage 3) is
+    # that pool as chosen on sequence evidence alone, with ipSAE NOT_EVALUATED.
+    # When more than 50 designs are ipSAE-complete we can do strictly better, so
+    # we also emit the top 50 of the final multi-objective ranking - every row of
+    # which carries a real, externally computed ipSAE.
+    if len(rows) > args.top_50:
+        write_set("top_50_scored", rows[: args.top_50])
+        print(f"[select] top_50_scored.* written ({args.top_50} fully scored designs)")
 
     with open(out / "excluded_from_submission.csv", "w", newline="") as fh:
         w = csv.writer(fh)

@@ -246,6 +246,65 @@ Columns worth reading before nominating anything:
   that this design needs structural evidence to adjudicate.
 - `epitope_recovery` — compare against the parent's value, not an absolute bar.
 
+## Running a second generation round
+
+Once a cofold campaign has completed you may want to widen the pool without
+discarding the structures you already paid for. Rounds are additive, but there is
+one hazard to respect.
+
+**`candidate_id` is assigned by rank within a round.** A fresh generation will
+mint `HER2_0001` for a *different* sequence, and because stage 4 names its
+structures after the candidate id, stage 5/6 would then join an existing
+structure to the wrong design. Always give a new round its own namespace:
+
+```bash
+# round 2: own id prefix, own output directory
+conda run -n her2_seq python scripts/stage2_generate_candidates.py \
+  --pool-size 1000000 --shortlist 50000 \
+  --id-prefix HER2B_ --outdir outputs/round2
+
+# NOTE --max-candidates: it defaults to 5000, so without it stage 3 would
+# silently score only a tenth of a 50k shortlist.
+conda run -n her2_seq python scripts/stage3_esm_rerank.py \
+  --shortlist outputs/round2/esm_shortlist.csv \
+  --residue-map outputs/residue_map.csv --max-candidates 50000 \
+  --queue-size 260 --batch-size 16 --outdir outputs/round2
+
+# merge: earliest round first; errors on id collision, drops sequences
+# an earlier round already queued
+conda run -n her2_seq python scripts/merge_queues.py \
+  --out outputs/priority_cofold_queue_merged.csv --retier \
+  outputs/priority_cofold_queue.csv outputs/round2/priority_cofold_queue.csv
+
+# stage 4 skips anything already complete, so only the new designs are computed
+conda run -n her2_boltz2 python scripts/stage4_boltz_cofold.py \
+  --queue outputs/priority_cofold_queue_merged.csv \
+  --limit 410 --seeds 42 --replicate-top 0 --time-budget-min 70
+
+# rescore and reselect across both rounds
+conda run -n her2_boltz2 python scripts/stage5_score_ipsae.py
+conda run -n her2_seq    python scripts/stage6_select_audit.py --top-n 15
+conda run -n her2_seq    python scripts/stage7_method_walkthrough.py
+```
+
+`merge_queues.py` revalidates every sequence as it merges, because a round
+boundary is a trust boundary: the round that generated a design is not the round
+that submits it.
+
+### Budgeting ESM against Boltz
+
+Both stages want the same GPU, so scaling one subtracts from the other. Measured
+rates (RTX 3090): ESM2-3B ~62 ms/candidate at batch 8; Boltz-2 ~15.5 s/structure.
+
+| ESM shortlist | ESM GPU time | Structures in the same time |
+| ---: | ---: | ---: |
+| 20,000 | ~21 min | ~80 |
+| 50,000 | ~52 min | ~200 |
+
+Raise `--batch-size` to trade VRAM for ESM throughput (batch 8 peaks at
+10.7 GiB of 24 GiB). Stage 3 always prints a projected cost from a 10-sequence
+probe before committing, and `--benchmark-only` stops after that probe.
+
 ## Troubleshooting
 
 | Symptom | Cause and fix |
