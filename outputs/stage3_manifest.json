@@ -1,0 +1,29 @@
+{
+  "generated_utc": "2026-10-31T12:43:09.798424+00:00",
+  "model": "esm2_t36_3B_UR50D",
+  "precision": "bf16",
+  "load_s": 24.3,
+  "site_scan_s": 6.8,
+  "contextual_s": 123.5,
+  "ms_per_seq_contextual": 61.7,
+  "candidates_scored": 4000,
+  "mutable_positions_scanned": 223,
+  "peak_gpu_gib": 10.91,
+  "bf16_fp32_control": {
+    "n": 12,
+    "max_abs_diff": 0.13301205076277256,
+    "mean_abs_diff": 0.04332316336603112,
+    "any_nan": false
+  },
+  "internal_pool": 50,
+  "priority": 15,
+  "queue_size": 150,
+  "branch_counts_internal": {
+    "B_interface": 12,
+    "A_h3": 20,
+    "C_mixed": 10,
+    "D_framework": 8
+  },
+  "ranking": "equal-weight rank aggregation of AbLang2 and ESM2 percentile ranks",
+  "caveat": "Neither model sees HER2; these are plausibility priors, not affinity predictions."
+}

@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Generated run artifacts. Everything here is regenerable by the pipeline;
+# committing it would add gigabytes for no reproducibility benefit.
+# ---------------------------------------------------------------------------
+
+# Boltz run directories: structures, PAE matrices, per-candidate MSAs, logs.
+pipeline_runs/
+logs/
+
+# Model weights and caches (see envs/README.md for download instructions).
+models/
+*.ckpt
+*.pt
+*.pth
+
+# Large generated intermediates. The curated deliverables below are kept.
+outputs/all_candidates.csv
+outputs/esm_shortlist.csv
+outputs/esm_shortlist.fasta
+outputs/mutation_site_prior.csv
+outputs/esm2_site_prior.csv
+outputs/model_scores.csv
+outputs/boltz_results_raw.csv
+
+# Cached MSAs (~5 MB, but regenerable with one bootstrap_msa_cache.py call).
+outputs/msa_cache/
+
+# Downloaded reference data - fetched and checksummed by stage 1.
+reference_data/*.pdb
+reference_data/*.cif
+reference_data/*.json
+reference_data/P04626.fasta
+
+# Vendored third-party source is cloned, not committed.
+third_party/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+
+# OS / editor
+.DS_Store
+*.swp

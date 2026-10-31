@@ -1,0 +1,42 @@
+# her2_boltz2 - structure-stage environment for the HER2 scFv pipeline.
+#
+# Used by:
+#   scripts/stage4_boltz_cofold.py   (Boltz-2 cofolding of scFv + HER2 domain IV)
+#   scripts/stage5_score_ipsae.py    (external DunbrackLab/IPSAE scoring)
+#
+# CRITICAL GOTCHA - cuEquivariance kernels:
+#   `pip install boltz==2.2.1` does NOT pull in cuequivariance_torch, but Boltz-2
+#   imports it at prediction time and dies with:
+#       ModuleNotFoundError: No module named 'cuequivariance_torch'
+#   Install the cuequivariance wheels matching your torch CUDA major version
+#   (cu13 wheels for torch cu13x, cu12 wheels for torch cu12x), as pinned below.
+#   Alternatively run boltz with `--no_kernels` to take the slower pure-torch
+#   path; stage4 exposes this as `--no-kernels`.
+#
+# Verified working here: torch 2.15.0+cu132 + cuequivariance 0.13.0 (cu13) on an
+# RTX 3090 24 GB. Measured: ~16 s per 361-residue complex with cached MSAs,
+# ~19 GB peak VRAM - so do NOT run two Boltz jobs concurrently on a 24 GB card.
+#
+# Boltz weights and the CCD cache (~3 GB) download to $BOLTZ_CACHE or ~/.boltz
+# on first prediction.
+#
+# Create:
+#   conda env create -f envs/her2_boltz2.yml
+# Verify:
+#   conda run -n her2_boltz2 boltz --help
+#   conda run -n her2_boltz2 python -c "import cuequivariance_torch; print('ok')"
+name: her2_boltz2
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - boltz==2.2.1
+      # Required at runtime by Boltz-2 but missing from its dependency set.
+      # Match the cuXX suffix to your torch build's CUDA major version.
+      - cuequivariance==0.13.0
+      - cuequivariance-torch==0.13.0
+      - cuequivariance-ops-torch-cu13==0.13.0
+      # numpy is needed by third_party/IPSAE/ipsae.py as well as Boltz.
+      - numpy

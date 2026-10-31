@@ -1,0 +1,46 @@
+# her2_seq - sequence-stage environment for the HER2 scFv pipeline.
+#
+# Used by:
+#   scripts/stage1_target_prep.py        (numpy only)
+#   scripts/stage2_generate_candidates.py (AbLang2 candidate generation)
+#   scripts/stage3_esm_rerank.py          (fair-esm ESM2-3B reranking)
+#
+# IMPORTANT - module name collision:
+#   `fair-esm` and EvolutionaryScale's `esm` (ESM3/ESM-C SDK) BOTH install a
+#   top-level package named `esm`. They cannot live in the same environment.
+#   Keep ESM3/ESM-C in a separate env (see envs/README.md) and never
+#   `pip install esm` into this one.
+#
+# Torch is intentionally left unpinned below so conda/pip can resolve a build
+# that matches the local driver. Verified working here: torch 2.11.0+cu130 on an
+# RTX 3090 (driver 580.178.04, CUDA 13.0). For an exact replica of the machine
+# this pipeline was developed on, use her2_seq_full.yml instead.
+#
+# Create:
+#   conda env create -f envs/her2_seq.yml
+# Verify:
+#   conda run -n her2_seq python -c "import torch,esm,ablang2; \
+#     print(torch.__version__, torch.cuda.is_available())"
+name: her2_seq
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      # Torch: install a CUDA build appropriate to your driver. On this machine:
+      #   pip install torch --index-url https://download.pytorch.org/whl/cu130
+      - torch
+      # Antibody language model for candidate generation (stage 2).
+      - ablang2==0.2.1
+      - rotary-embedding-torch
+      - einops
+      # General protein language model for orthogonal reranking (stage 3).
+      # Weights (esm2_t36_3B_UR50D, ~5.3 GB) download to $TORCH_HOME on first use.
+      - fair-esm==2.0.0
+      # Shared utilities.
+      - numpy
+      - pandas
+      - biopython
+      - pyyaml
+      - scikit-learn
