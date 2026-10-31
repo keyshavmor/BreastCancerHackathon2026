@@ -253,7 +253,11 @@ def main() -> int:
 
     preds: list[Path] = []
     for rd in args.run_dir:
-        found = sorted({p for p in (rd / "out").glob("boltz_results_*/predictions/*")
+        # Local runs nest results under <run>/out/; a Modal volume pulled with
+        # `modal volume get` lands them at the run root. Accept both rather than
+        # silently scanning zero predictions.
+        found = sorted({p for base in (rd / "out", rd)
+                        for p in base.glob("boltz_results_*/predictions/*")
                         if p.is_dir()})
         if found:
             print(f"[scan] {len(found)} predictions under {rd}")

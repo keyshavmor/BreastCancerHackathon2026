@@ -1,0 +1,6 @@
+mutation,position,parent_aa,mutant_aa,domain,cdr,experimental_contact_class,experimental_min_dist_to_HER2_A,pdb_chain,pdb_resnum
+G100D,100,G,D,VH,CDR-H3,near,6.99,B,100
+A106Y,106,A,Y,VH,CDR-H3,near,6.83,B,106
+Y109S,109,Y,S,VH,CDR-H3,distal,11.97,B,109
+I210V,210,I,V,VL,framework,distal,19.6,A,75
+I241V,241,I,V,VL,framework,distal,28.92,A,106

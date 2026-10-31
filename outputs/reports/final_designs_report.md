@@ -1,6 +1,6 @@
 # Final designs report - HER2 scFv optimisation
 
-Generated 2026-10-31T14:26:25+00:00.
+Generated 2026-10-31T15:08:28+00:00.
 
 > **Claim boundary.** Every value here is a computational ranking signal for experimental triage. ipSAE is not a binding affinity, ipTM is not ipSAE, and a higher score is not a demonstrated improvement. No K_D is predicted.
 
@@ -8,24 +8,24 @@ Generated 2026-10-31T14:26:25+00:00.
 
 | Quantity | Value |
 | --- | ---: |
-| Designs with a genuine external ipSAE | **149** |
-| Structures behind them | 368 |
-| Local / Modal structures | 368 / 0 |
+| Designs with a genuine external ipSAE | **249** |
+| Structures behind them | 1583 |
+| Local / Modal structures | 519 / 1064 |
 | Ranked submission set | 50 |
 | Lab nominations | 15 |
-| Parent replicates | 5 |
+| Parent replicates | 14 |
 | Compliance audit | **PASS** (0 failed) |
 
-Parent baseline: **0.6864** +/- 0.0574 over 5 seeds.
+Parent baseline: **0.7127** +/- 0.0445 over 14 seeds.
 
 ### How each design compares with the parent
 
 | Verdict | Designs |
 | --- | ---: |
-| ABOVE_PARENT | 4 |
-| BELOW_PARENT | 14 |
-| WITHIN_SEED_NOISE | 45 |
-| SINGLE_SEED_UNRELIABLE | 86 |
+| ABOVE_PARENT | 0 |
+| BELOW_PARENT | 124 |
+| WITHIN_SEED_NOISE | 125 |
+| SINGLE_SEED_UNRELIABLE | 0 |
 | NO_PARENT_BASELINE | 0 |
 
 `SINGLE_SEED_UNRELIABLE` means the design has one replicate, which at the measured reliability cannot support a directional claim either way.
@@ -36,76 +36,76 @@ Ranked by the multi-objective score (sequence consensus, ipSAE, epitope recovery
 
 | # | design | branch | muts | ipSAE | sd | n | delta vs parent | epitope | ipTM | interface | verdict |
 | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
-| 1 | `HER2_11519` | C_mixed | 5 | 0.7131 | 0.035 | 4 | 0.0267 | 1.000 | 0.899 | OK | indistinguishable |
-| 2 | `HER2_1238` | B_interface | 5 | 0.7417 | 0.021 | 4 | 0.0553 | 0.921 | 0.908 | OK | indistinguishable |
-| 3 | `HER2_8022` | B_interface | 8 | 0.7267 | 0.027 | 4 | 0.0403 | 0.974 | 0.903 | OK | indistinguishable |
-| 4 | `HER2_5693` | D_framework | 6 | 0.7258 | 0.023 | 5 | 0.0394 | 0.979 | 0.900 | OK | indistinguishable |
-| 5 | `HER2_13625` | C_mixed | 8 | 0.7451 | 0.012 | 4 | 0.0587 | 0.947 | 0.911 | OK | above |
-| 6 | `HER2_0070` | B_interface | 5 | 0.6856 | 0.024 | 5 | -0.0008 | 0.863 | 0.884 | OK | indistinguishable |
-| 7 | `HER2_17118` | C_mixed | 6 | 0.7513 | 0.035 | 4 | 0.0649 | 0.987 | 0.910 | OK | above |
-| 8 | `HER2_9557` | A_h3 | 8 | 0.7133 | 0.041 | 5 | 0.0269 | 0.968 | 0.904 | OK | indistinguishable |
-| 9 | `HER2_10808` | B_interface | 8 | 0.6850 | 0.039 | 4 | -0.0014 | 0.947 | 0.893 | OK | indistinguishable |
-| 10 | `HER2_0077` | B_interface | 5 | 0.6484 | 0.082 | 5 | -0.0380 | 0.926 | 0.882 | OK | indistinguishable |
-| 11 | `HER2_21202` | C_mixed | 6 | 0.7306 | 0.010 | 4 | 0.0442 | 0.974 | 0.906 | OK | indistinguishable |
-| 12 | `HER2_17465` | D_framework | 8 | 0.7496 | 0.038 | 4 | 0.0632 | 0.947 | 0.915 | OK | indistinguishable |
-| 13 | `HER2_7401` | B_interface | 6 | 0.6648 | 0.038 | 3 | -0.0216 | 0.965 | 0.882 | OK | indistinguishable |
-| 14 | `HER2_14954` | D_framework | 6 | 0.7226 | 0.035 | 4 | 0.0362 | 0.974 | 0.904 | OK | indistinguishable |
-| 15 | `HER2_13086` | C_mixed | 7 | 0.6961 | 0.047 | 4 | 0.0097 | 0.947 | 0.896 | OK | indistinguishable |
-| 16 | `HER2_18216` | D_framework | 7 | 0.7209 | 0.046 | 3 | 0.0345 | 0.930 | 0.903 | OK | indistinguishable |
-| 17 | `HER2_15708` | D_framework | 6 | 0.6682 | 0.067 | 4 | -0.0182 | 0.961 | 0.890 | OK | indistinguishable |
-| 18 | `HER2_8386` | C_mixed | 5 | 0.7054 | 0.037 | 4 | 0.0190 | 0.961 | 0.893 | OK | indistinguishable |
-| 19 | `HER2_15056` | B_interface | 7 | 0.6596 | 0.040 | 3 | -0.0268 | 0.965 | 0.888 | OK | indistinguishable |
-| 20 | `HER2_19503` | D_framework | 6 | 0.7011 | 0.034 | 3 | 0.0147 | 1.000 | 0.894 | OK | indistinguishable |
-| 21 | `HER2_8533` | D_framework | 7 | 0.6488 | 0.076 | 4 | -0.0376 | 1.000 | 0.887 | OK | indistinguishable |
-| 22 | `HER2_1401` | B_interface | 8 | 0.6332 | 0.022 | 4 | -0.0532 | 0.974 | 0.859 | OK | indistinguishable |
-| 23 | `HER2_2720` | C_mixed | 7 | 0.7292 | 0.039 | 3 | 0.0428 | 0.930 | 0.902 | OK | indistinguishable |
-| 24 | `HER2_3536` | C_mixed | 5 | 0.7012 | 0.060 | 3 | 0.0148 | 0.860 | 0.890 | OK | indistinguishable |
-| 25 | `HER2_11456` | B_interface | 7 | 0.6777 | 0.060 | 3 | -0.0087 | 0.947 | 0.880 | OK | indistinguishable |
-| 26 | `HER2_14514` | C_mixed | 6 | 0.7486 | 0.013 | 4 | 0.0622 | 0.961 | 0.912 | OK | above |
-| 27 | `HER2_23723` | C_mixed | 5 | 0.7349 | 0.047 | 4 | 0.0485 | 0.974 | 0.909 | OK | indistinguishable |
-| 28 | `HER2_18461` | C_mixed | 5 | 0.7262 | 0.008 | 3 | 0.0398 | 0.912 | 0.906 | OK | indistinguishable |
-| 29 | `HER2_11449` | B_interface | 5 | 0.6807 | 0.024 | 3 | -0.0057 | 0.860 | 0.884 | OK | indistinguishable |
-| 30 | `HER2_7827` | C_mixed | 8 | 0.6882 | 0.082 | 3 | 0.0018 | 0.912 | 0.890 | OK | indistinguishable |
-| 31 | `HER2_17641` | C_mixed | 8 | 0.7595 | 0.029 | 3 | 0.0731 | 0.842 | 0.914 | OK | above |
-| 32 | `HER2_17485` | B_interface | 8 | 0.7217 | 0.066 | 3 | 0.0353 | 0.895 | 0.901 | OK | indistinguishable |
-| 33 | `HER2_28172` | D_framework | 7 | 0.7162 | 0.043 | 3 | 0.0298 | 1.000 | 0.905 | OK | indistinguishable |
-| 34 | `HER2_8798` | B_interface | 8 | 0.6887 | 0.056 | 3 | 0.0023 | 0.895 | 0.894 | OK | indistinguishable |
-| 35 | `HER2_2407` | D_framework | 6 | 0.6499 | 0.000 | 1 | -0.0365 | 1.000 | 0.887 | OK | 1 seed |
-| 36 | `HER2_11678` | B_interface | 7 | 0.6370 | 0.138 | 4 | -0.0494 | 0.987 | 0.871 | OK | indistinguishable |
-| 37 | `HER2_26656` | C_mixed | 5 | 0.6632 | 0.081 | 4 | -0.0232 | 0.987 | 0.887 | OK | indistinguishable |
-| 38 | `HER2_12026` | C_mixed | 7 | 0.6773 | 0.000 | 1 | -0.0091 | 0.895 | 0.885 | OK | 1 seed |
-| 39 | `HER2_13103` | B_interface | 6 | 0.7185 | 0.000 | 1 | 0.0321 | 0.789 | 0.898 | OK | 1 seed |
-| 40 | `HER2_10014` | C_mixed | 7 | 0.6940 | 0.000 | 1 | 0.0076 | 1.000 | 0.887 | OK | 1 seed |
-| 41 | `HER2_12122` | C_mixed | 8 | 0.6385 | 0.000 | 1 | -0.0479 | 0.947 | 0.886 | OK | 1 seed |
-| 42 | `HER2_15988` | B_interface | 8 | 0.7129 | 0.023 | 3 | 0.0265 | 0.947 | 0.897 | OK | indistinguishable |
-| 43 | `HER2_11522` | A_h3 | 8 | 0.6721 | 0.000 | 1 | -0.0143 | 0.895 | 0.874 | OK | 1 seed |
-| 44 | `HER2_11611` | A_h3 | 5 | 0.6471 | 0.000 | 1 | -0.0393 | 0.947 | 0.883 | OK | 1 seed |
-| 45 | `HER2_14939` | C_mixed | 7 | 0.7249 | 0.009 | 3 | 0.0385 | 0.930 | 0.901 | OK | indistinguishable |
-| 46 | `HER2_19004` | C_mixed | 7 | 0.6828 | 0.050 | 3 | -0.0036 | 0.947 | 0.886 | OK | indistinguishable |
-| 47 | `HER2_10485` | C_mixed | 6 | 0.6458 | 0.000 | 1 | -0.0406 | 0.947 | 0.867 | OK | 1 seed |
-| 48 | `HER2_3091` | B_interface | 5 | 0.6780 | 0.089 | 3 | -0.0084 | 0.895 | 0.884 | OK | indistinguishable |
-| 49 | `HER2_22350` | C_mixed | 8 | 0.7500 | 0.000 | 1 | 0.0636 | 0.947 | 0.909 | OK | 1 seed |
-| 50 | `HER2_1981` | A_h3 | 8 | 0.3887 | 0.000 | 1 | -0.2977 | 1.000 | 0.784 | COLLAPSED | 1 seed |
+| 1 | `HER2_11519` | C_mixed | 5 | 0.6946 | 0.066 | 15 | -0.0181 | 0.983 | 0.894 | OK | indistinguishable |
+| 2 | `HER2_1238` | B_interface | 5 | 0.7322 | 0.028 | 14 | 0.0195 | 0.917 | 0.906 | OK | indistinguishable |
+| 3 | `HER2_15056` | B_interface | 7 | 0.7213 | 0.051 | 10 | 0.0086 | 0.968 | 0.906 | OK | indistinguishable |
+| 4 | `HER2_13625` | C_mixed | 8 | 0.7500 | 0.021 | 11 | 0.0373 | 0.947 | 0.913 | OK | above |
+| 5 | `HER2_5693` | D_framework | 6 | 0.7111 | 0.039 | 12 | -0.0016 | 0.974 | 0.896 | OK | indistinguishable |
+| 6 | `HER2_15708` | D_framework | 6 | 0.6939 | 0.046 | 11 | -0.0188 | 0.976 | 0.899 | OK | indistinguishable |
+| 7 | `HER2_17465` | D_framework | 8 | 0.7290 | 0.051 | 11 | 0.0163 | 0.967 | 0.907 | OK | indistinguishable |
+| 8 | `HER2_8022` | B_interface | 8 | 0.6933 | 0.086 | 11 | -0.0194 | 0.957 | 0.895 | OK | indistinguishable |
+| 9 | `HER2_9557` | A_h3 | 8 | 0.7023 | 0.064 | 12 | -0.0104 | 0.969 | 0.902 | OK | indistinguishable |
+| 10 | `HER2_17118` | C_mixed | 6 | 0.7304 | 0.036 | 11 | 0.0177 | 0.967 | 0.904 | OK | indistinguishable |
+| 11 | `HER2_18216` | D_framework | 7 | 0.7220 | 0.034 | 10 | 0.0093 | 0.947 | 0.904 | OK | indistinguishable |
+| 12 | `HER2_19503` | D_framework | 6 | 0.7142 | 0.033 | 10 | 0.0015 | 0.990 | 0.897 | OK | indistinguishable |
+| 13 | `HER2_14954` | D_framework | 6 | 0.7262 | 0.028 | 14 | 0.0135 | 0.966 | 0.905 | OK | indistinguishable |
+| 14 | `HER2B_10177` | C_mixed | 5 | 0.7330 | 0.032 | 2 | 0.0203 | 1.000 | 0.912 | OK | indistinguishable |
+| 15 | `HER2_23723` | C_mixed | 5 | 0.7246 | 0.052 | 11 | 0.0119 | 0.986 | 0.906 | OK | indistinguishable |
+| 16 | `HER2_21202` | C_mixed | 6 | 0.7221 | 0.020 | 11 | 0.0094 | 0.971 | 0.903 | OK | indistinguishable |
+| 17 | `HER2_17254` | D_framework | 7 | 0.7269 | 0.038 | 8 | 0.0142 | 0.941 | 0.905 | OK | indistinguishable |
+| 18 | `HER2_0077` | B_interface | 5 | 0.6584 | 0.079 | 12 | -0.0543 | 0.947 | 0.882 | OK | below |
+| 19 | `HER2B_0949` | B_interface | 5 | 0.7307 | 0.018 | 2 | 0.0180 | 0.974 | 0.905 | OK | indistinguishable |
+| 20 | `HER2_13086` | C_mixed | 7 | 0.6875 | 0.044 | 11 | -0.0252 | 0.957 | 0.895 | OK | indistinguishable |
+| 21 | `HER2_18461` | C_mixed | 5 | 0.7276 | 0.038 | 10 | 0.0149 | 0.937 | 0.908 | OK | indistinguishable |
+| 22 | `HER2_8533` | D_framework | 7 | 0.6527 | 0.051 | 11 | -0.0600 | 1.000 | 0.887 | OK | below |
+| 23 | `HER2_15988` | B_interface | 8 | 0.7133 | 0.025 | 10 | 0.0006 | 0.958 | 0.899 | OK | indistinguishable |
+| 24 | `HER2_22350` | C_mixed | 8 | 0.7097 | 0.033 | 8 | -0.0030 | 0.993 | 0.898 | OK | indistinguishable |
+| 25 | `HER2_21848` | B_interface | 5 | 0.6928 | 0.039 | 8 | -0.0199 | 0.954 | 0.892 | OK | indistinguishable |
+| 26 | `HER2_26656` | C_mixed | 5 | 0.6759 | 0.062 | 11 | -0.0368 | 0.976 | 0.892 | OK | indistinguishable |
+| 27 | `HER2_15853` | D_framework | 7 | 0.6581 | 0.054 | 8 | -0.0546 | 0.974 | 0.885 | OK | below |
+| 28 | `HER2_15259` | D_framework | 8 | 0.7066 | 0.060 | 8 | -0.0061 | 0.947 | 0.899 | OK | indistinguishable |
+| 29 | `HER2_13727` | C_mixed | 8 | 0.6798 | 0.101 | 8 | -0.0329 | 0.980 | 0.888 | OK | indistinguishable |
+| 30 | `HER2_24532` | D_framework | 7 | 0.6932 | 0.066 | 10 | -0.0195 | 0.968 | 0.895 | OK | indistinguishable |
+| 31 | `HER2_8386` | C_mixed | 5 | 0.6875 | 0.035 | 11 | -0.0252 | 0.952 | 0.888 | OK | indistinguishable |
+| 32 | `HER2_12026` | C_mixed | 7 | 0.6892 | 0.052 | 8 | -0.0235 | 0.928 | 0.893 | OK | indistinguishable |
+| 33 | `HER2_14514` | C_mixed | 6 | 0.7560 | 0.017 | 11 | 0.0433 | 0.923 | 0.914 | OK | above |
+| 34 | `HER2_10808` | B_interface | 8 | 0.6751 | 0.053 | 11 | -0.0376 | 0.943 | 0.889 | OK | indistinguishable |
+| 35 | `HER2_0070` | B_interface | 5 | 0.6651 | 0.041 | 12 | -0.0476 | 0.895 | 0.878 | OK | below |
+| 36 | `HER2_15323` | B_interface | 5 | 0.6820 | 0.033 | 8 | -0.0307 | 0.934 | 0.894 | OK | indistinguishable |
+| 37 | `HER2_7401` | B_interface | 6 | 0.6486 | 0.053 | 10 | -0.0641 | 0.968 | 0.875 | OK | below |
+| 38 | `HER2_2407` | D_framework | 6 | 0.6578 | 0.050 | 8 | -0.0549 | 0.987 | 0.886 | OK | below |
+| 39 | `HER2_17641` | C_mixed | 8 | 0.7528 | 0.042 | 10 | 0.0401 | 0.868 | 0.911 | OK | above |
+| 40 | `HER2B_0719` | B_interface | 5 | 0.6865 | 0.007 | 2 | -0.0262 | 0.974 | 0.895 | OK | below |
+| 41 | `HER2B_0930` | B_interface | 5 | 0.7220 | 0.036 | 2 | 0.0093 | 0.947 | 0.898 | OK | indistinguishable |
+| 42 | `HER2B_0096` | B_interface | 5 | 0.7286 | 0.069 | 2 | 0.0159 | 0.895 | 0.910 | OK | indistinguishable |
+| 43 | `HER2_28172` | D_framework | 7 | 0.7203 | 0.032 | 10 | 0.0076 | 0.947 | 0.907 | OK | indistinguishable |
+| 44 | `HER2_10341` | C_mixed | 8 | 0.6587 | 0.088 | 8 | -0.0540 | 0.980 | 0.877 | OK | indistinguishable |
+| 45 | `HER2_3536` | C_mixed | 5 | 0.7060 | 0.034 | 10 | -0.0067 | 0.889 | 0.892 | OK | indistinguishable |
+| 46 | `HER2B_1130` | B_interface | 5 | 0.6936 | 0.073 | 2 | -0.0191 | 0.974 | 0.900 | OK | indistinguishable |
+| 47 | `HER2_24248` | D_framework | 8 | 0.6982 | 0.024 | 8 | -0.0145 | 0.974 | 0.896 | OK | indistinguishable |
+| 48 | `HER2B_1025` | B_interface | 5 | 0.6923 | 0.046 | 2 | -0.0204 | 1.000 | 0.887 | OK | indistinguishable |
+| 49 | `HER2_19004` | C_mixed | 7 | 0.7016 | 0.033 | 10 | -0.0111 | 0.921 | 0.896 | OK | indistinguishable |
+| 50 | `HER2_22721` | C_mixed | 5 | 0.7064 | 0.071 | 8 | -0.0063 | 0.961 | 0.896 | OK | indistinguishable |
 
 ## Lab nominations
 
 | # | design | branch | substitutions | ipSAE | epitope | rank shift |
 | ---: | --- | --- | --- | ---: | ---: | ---: |
-| 1 | `HER2_11519` | C_mixed | `I29F;L181F;R201G;I210V;S212G` | 0.7131 | 1.000 | 1 |
-| 2 | `HER2_1238` | B_interface | `T32Y;N55G;A79L;A186T;T232A` | 0.7417 | 0.921 | 1 |
-| 3 | `HER2_8022` | B_interface | `T54G;R59Y;I70T;T155S;A160T;T166N;Y184H;R201G` | 0.7267 | 0.974 | 2 |
-| 4 | `HER2_5693` | D_framework | `A79V;S97A;T157A;A169N;V193A;T209I` | 0.7258 | 0.979 | 2 |
-| 5 | `HER2_13625` | C_mixed | `Q13R;N28T;Y52T;P53S;T69S;I70V;D73E;A169N` | 0.7451 | 0.947 | 5 |
-| 6 | `HER2_9557` | A_h3 | `T32Y;W47Y;E89D;G101T;Y105N;Y109F;S185A;S191I` | 0.7133 | 0.968 | 6 |
-| 7 | `HER2_7401` | B_interface | `L20V;D62E;V64L;F104N;D163G;V164I` | 0.6648 | 0.965 | 21 |
-| 8 | `HER2_14954` | D_framework | `F27L;T74N;S75A;G151R;I210V;Q214L` | 0.7226 | 0.974 | 41 |
-| 9 | `HER2_3536` | C_mixed | `T32Y;T74N;S120P;S211N;P231R` | 0.7012 | 0.860 | 39 |
-| 10 | `HER2_11456` | B_interface | `S63P;D102S;V168L;F206Y;Q214E;T228G;P231Q` | 0.6777 | 0.947 | 18 |
-| 11 | `HER2_2788` | A_h3 | `D31N;P53G;Y80S;D102S;F104S;Y105N;A169N;Q214R` | 0.6099 | 0.947 | 27 |
-| 12 | `HER2_9311` | A_h3 | `A92S;W99D;D102G;D108G;V168L;K177E;T228S;T232A` | 0.6299 | 0.947 | 26 |
-| 13 | `HER2_8404` | A_h3 | `I29L;T58I;Y94F;Y105N;M107L;D108E;Q225H` | 0.6442 | 0.947 | 18 |
-| 14 | `HER2_1582` | A_h3 | `T54N;T74D;G101S;A106S;D163G;A167Y;A169N;K238R` | 0.5937 | 0.842 | 56 |
-| 15 | `HER2_8252` | A_h3 | `A49S;S63A;V64M;I70V;G100N;D102G;F188N;P231Q` | 0.5933 | 0.789 | 37 |
+| 1 | `HER2_13625` | C_mixed | `Q13R;N28T;Y52T;P53S;T69S;I70V;D73E;A169N` | 0.7500 | 0.947 | 5 |
+| 2 | `HER2_14514` | C_mixed | `T32Y;I51V;N55E;Q82E;S119P;Q173H` | 0.7560 | 0.923 | 40 |
+| 3 | `HER2B_0955` | B_interface | `T32Y;Y33W;T54D;V164I;V168L` | 0.7452 | 0.895 | 61 |
+| 4 | `HER2_11519` | C_mixed | `I29F;L181F;R201G;I210V;S212G` | 0.6946 | 0.983 | 8 |
+| 5 | `HER2_1238` | B_interface | `T32Y;N55G;A79L;A186T;T232A` | 0.7322 | 0.917 | 3 |
+| 6 | `HER2_5693` | D_framework | `A79V;S97A;T157A;A169N;V193A;T209I` | 0.7111 | 0.974 | 7 |
+| 7 | `HER2_15708` | D_framework | `S7T;A72R;M83L;E89D;L115T;Y171F` | 0.6939 | 0.976 | 11 |
+| 8 | `HER2_8022` | B_interface | `T54G;R59Y;I70T;T155S;A160T;T166N;Y184H;R201G` | 0.6933 | 0.957 | 17 |
+| 9 | `HER2_9557` | A_h3 | `T32Y;W47Y;E89D;G101T;Y105N;Y109F;S185A;S191I` | 0.7023 | 0.969 | 12 |
+| 10 | `HER2_18461` | C_mixed | `I51V;S75A;E89D;I137V;Y184F` | 0.7276 | 0.937 | 9 |
+| 11 | `HER2_15988` | B_interface | `I34M;G56S;T58A;S85G;R159Q;Q162L;D163G;I241V` | 0.7133 | 0.958 | 23 |
+| 12 | `HER2_13103` | B_interface | `L45P;I51L;D62E;G66D;F188N;T220A` | 0.7081 | 0.822 | 5 |
+| 13 | `HER2_11611` | A_h3 | `G100D;A106Y;Y109S;I210V;I241V` | 0.6116 | 0.954 | 36 |
+| 14 | `HER2_4995` | A_h3 | `D102S;F104S;M107F;D108A;A167Y;Y171F;S187T;Q224L` | 0.4552 | 0.987 | 66 |
+| 15 | `HER2_1582` | A_h3 | `T54N;T74D;G101S;A106S;D163G;A167Y;A169N;K238R` | 0.5677 | 0.900 | 69 |
 
 `rank shift` is how far a design moves under three alternative weightings; a large value means its position depends on one metric.
 
@@ -115,15 +115,15 @@ Ranked by the multi-objective score (sequence consensus, ipSAE, epitope recovery
 
 | design | muts | modelled contacts | epitope recovery | folder |
 | --- | ---: | ---: | ---: | --- |
-| `HER2_11519` | 5 | 32 | 1.000 | `binders/HER2_11519` |
-| `HER2_1238` | 5 | 29 | 0.930 | `binders/HER2_1238` |
-| `HER2_8022` | 8 | 29 | 0.983 | `binders/HER2_8022` |
-| `HER2_5693` | 6 | 31 | 0.965 | `binders/HER2_5693` |
-| `HER2_9557` | 8 | 31 | 0.965 | `binders/HER2_9557` |
-| `HER2_13625` | 8 | 36 | 0.930 | `binders/HER2_13625` |
-| `HER2_15708` | 6 | 27 | 0.965 | `binders/HER2_15708` |
-| `HER2_14514` | 6 | 31 | 0.965 | `binders/HER2_14514` |
-| `HER2_11449` | 5 | 27 | 0.868 | `binders/HER2_11449` |
+| `HER2_11519` | 5 | 30 | 1.000 | `binders/HER2_11519` |
+| `HER2_1238` | 5 | 31 | 0.921 | `binders/HER2_1238` |
+| `HER2_8022` | 8 | 32 | 0.974 | `binders/HER2_8022` |
+| `HER2_5693` | 6 | 32 | 0.979 | `binders/HER2_5693` |
+| `HER2_13625` | 8 | 28 | 0.947 | `binders/HER2_13625` |
+| `HER2_9557` | 8 | 31 | 0.968 | `binders/HER2_9557` |
+| `HER2_7401` | 6 | 32 | 0.965 | `binders/HER2_7401` |
+| `HER2_14954` | 6 | 32 | 0.974 | `binders/HER2_14954` |
+| `HER2_3536` | 5 | 29 | 0.860 | `binders/HER2_3536` |
 | `HER2_11456` | 7 | 28 | 0.947 | `binders/HER2_11456` |
 | `HER2_2788` | 8 | 29 | 0.947 | `binders/HER2_2788` |
 | `HER2_9311` | 8 | 34 | 0.947 | `binders/HER2_9311` |

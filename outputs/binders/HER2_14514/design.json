@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_14514",
-  "generated_utc": "2026-10-31T14:11:52.442981+00:00",
+  "generated_utc": "2026-10-31T15:08:29.377779+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDYYIHWVRQAPGKGLEWVARVYPTEGYTRYADSVKGRFTISADTSKNTAYLEMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVPSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQHKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -33,24 +33,24 @@
     "reconstructible_from_parent": true
   },
   "scores": {
-    "rank": "20",
-    "ipsae_min": "0.7521",
-    "ipsae_min_sd": "0.0132",
-    "ipsae_max": "0.8732",
-    "ipsae_delta_vs_parent": "0.0614",
-    "ipsae_interpretation": "ABOVE_PARENT",
+    "rank": "33",
+    "ipsae_min": "0.756",
+    "ipsae_min_sd": "0.0168",
+    "ipsae_max": "0.8747",
+    "ipsae_delta_vs_parent": "0.0433",
+    "ipsae_interpretation": "WITHIN_SEED_NOISE",
     "interface_status": "OK",
-    "n_seeds": "3",
-    "seeds": "13;42;7",
-    "iptm": "0.9136",
-    "pDockQ": "0.5013",
-    "LIS": "0.6276",
-    "epitope_recovery": "0.9649",
+    "n_seeds": "11",
+    "seeds": "101;13;42;7;1001;1002;1003;1004;1005;1006;1007",
+    "iptm": "0.9145",
+    "pDockQ": "0.4859",
+    "LIS": "0.6302",
+    "epitope_recovery": "0.9234",
     "ablang2_contextual": "-0.67",
     "esm2_contextual": "-1.4632",
     "sequence_consensus_score": "0.5268",
-    "rank_score": "0.6412",
-    "max_rank_shift_under_reweighting": "68"
+    "rank_score": "0.6952",
+    "max_rank_shift_under_reweighting": "40"
   },
   "structure": {
     "representative_run": "HER2_14514_seed7",

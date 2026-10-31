@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-31T14:27:45.781130+00:00",
-  "repo_commit": "83d7bf64db2d4ec4ae5586f1d9639e62160b9466",
+  "generated_utc": "2026-10-31T15:08:14.380651+00:00",
+  "repo_commit": "51e7bc75e86ba585bb296744d2e662152045a46c",
   "repo_dirty": true,
   "parent_sha256": "0b9248c76a2b399791c47dbfa0d252b18284265f1dbca9ae8e66c0dd018c9f64",
   "weights_primary": {
@@ -35,10 +35,10 @@
   },
   "min_epitope_recovery": 0.3,
   "counts": {
-    "scored_submission": 149,
+    "scored_submission": 249,
     "top_n": 15,
     "internal_pool": 50,
-    "excluded": 60
+    "excluded": 1
   },
   "claim_boundary": "Model scores rank designs for experimental triage. No in-silico K_D is claimed. ipSAE is not an affinity measurement."
 }

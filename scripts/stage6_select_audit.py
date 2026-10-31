@@ -94,6 +94,10 @@ def main() -> int:
     here = Path(__file__).resolve().parent
     base = here.parent
     ap.add_argument("--outdir", type=Path, default=base / "outputs")
+    ap.add_argument("--queues", type=Path, nargs="*", default=None,
+                    help="queue CSVs that define the candidate universe. Defaults to every "
+                         "known queue, because a design only enters the submission if its "
+                         "sequence is found here - missing one silently drops those designs.")
     ap.add_argument("--top-n", type=int, default=15)
     ap.add_argument("--top-50", type=int, default=50,
                     help="also emit this many top-ranked fully scored designs")
@@ -106,7 +110,25 @@ def main() -> int:
     out = args.outdir
     hc.assert_parent_integrity()
 
-    queue = read_csv(out / "priority_cofold_queue.csv")
+    qpaths = args.queues if args.queues else [
+        out / "priority_cofold_queue.csv",
+        out / "priority_cofold_queue_merged.csv",
+        out / "queue_exploit.csv",
+        out / "queue_sweep.csv",
+        out / "queue_breadth.csv",
+        out / "queue_winners.csv",
+        out / "round2" / "priority_cofold_queue.csv",
+    ]
+    queue: list[dict] = []
+    seen_q: set[str] = set()
+    for qp in qpaths:
+        for r in read_csv(qp):
+            cid = r.get("candidate_id")
+            if cid and cid not in seen_q:
+                seen_q.add(cid)
+                queue.append(r)
+    print(f"[universe] {len(queue)} candidate sequences from "
+          f"{sum(1 for q in qpaths if Path(q).is_file())} queue file(s)")
     agg = {r["candidate_id"]: r for r in read_csv(out / "ipsae_aggregated.csv")}
     raw = read_csv(out / "boltz_results_raw.csv")
     internal = read_csv(out / "internal_50_candidates.csv")
@@ -455,7 +477,34 @@ def main() -> int:
         if r["candidate_id"] not in have:
             chosen.append(r)
             have.add(r["candidate_id"])
-    chosen = sorted(chosen, key=lambda r: -r["rank_score"])[: args.top_n]
+    # Force-include designs with FDR-corrected evidence of exceeding the parent.
+    # The multi-objective score weights ipSAE at only 0.25 and imposes branch
+    # quotas, which can crowd out the very designs for which the statistical
+    # evidence is strongest - that is exactly what happened to the best design
+    # here. A multiple-comparison-corrected advantage earns a lab slot outright.
+    fdr_ids: set[str] = set()
+    try:
+        _pc = ((diag.get("reliability") or {}).get("parent_comparison") or {})
+        fdr_ids = {t["candidate_id"] for t in _pc.get("tests", [])
+                   if t.get("verdict_fdr") == "ABOVE_PARENT_FDR"}
+    except Exception:                                            # noqa: BLE001
+        fdr_ids = set()
+    by_id = {r["candidate_id"]: r for r in nominable}
+    forced = [by_id[c] for c in sorted(fdr_ids) if c in by_id]
+    if forced:
+        fids = {f["candidate_id"] for f in forced}
+        chosen = forced + [r for r in chosen if r["candidate_id"] not in fids]
+        print(f"[select] force-included {len(forced)} FDR-significant design(s): "
+              f"{sorted(fids)}")
+    missing = sorted(fdr_ids - set(by_id))
+    if missing:
+        print(f"[select] WARNING {len(missing)} FDR-significant design(s) not nominable "
+              f"(interface collapsed or filtered): {missing}")
+    # FDR winners first, then the multi-objective order.
+    chosen = (sorted([r for r in chosen if r["candidate_id"] in fdr_ids],
+                     key=lambda r: -r["rank_score"])
+              + sorted([r for r in chosen if r["candidate_id"] not in fdr_ids],
+                       key=lambda r: -r["rank_score"]))[: args.top_n]
     chosen_ids = {r["candidate_id"] for r in chosen}
     for r in rows:
         r["selected_top15"] = r["candidate_id"] in chosen_ids

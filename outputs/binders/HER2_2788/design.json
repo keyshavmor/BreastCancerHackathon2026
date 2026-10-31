@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_2788",
-  "generated_utc": "2026-10-31T14:26:28.303623+00:00",
+  "generated_utc": "2026-10-31T15:02:09.143283+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKNTYIHWVRQAPGKGLEWVARIYGTNGYTRYADSVKGRFTISADTSKNTASLQMNSLRAEDTAVYYCSRWGGSGSNAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVNWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLRPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -43,7 +43,7 @@
     "ipsae_min": "0.6099",
     "ipsae_min_sd": "0.0",
     "ipsae_max": "0.7963",
-    "ipsae_delta_vs_parent": "-0.0765",
+    "ipsae_delta_vs_parent": "-0.0865",
     "ipsae_interpretation": "SINGLE_SEED_UNRELIABLE",
     "interface_status": "OK",
     "n_seeds": "1",

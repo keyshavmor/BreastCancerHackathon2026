@@ -1,22 +1,22 @@
 {
-  "generated_utc": "2026-10-31T14:26:25+00:00",
+  "generated_utc": "2026-10-31T15:08:52+00:00",
   "overall": "ATTENTION",
   "failed": 1,
-  "designs_cofolded": 209,
-  "submitted_with_ipsae": 149,
+  "designs_cofolded": 250,
+  "submitted_with_ipsae": 249,
   "nominations": 15,
   "checks": [
     {
       "section": "Deliverable",
       "rule": "Proposed sequences, each >=5 mutations vs parent",
       "result": "PASS",
-      "evidence": "149 sequences in submission_scored.fasta; violations=none"
+      "evidence": "249 sequences in submission_scored.fasta; violations=none"
     },
     {
       "section": "Deliverable",
       "rule": "ipSAE score for EVERY submitted design",
       "result": "PASS",
-      "evidence": "149/149 have a finite ipSAE; provenance file present"
+      "evidence": "249/249 have a finite ipSAE; provenance file present"
     },
     {
       "section": "Deliverable",
@@ -28,7 +28,7 @@
       "section": "Deliverable",
       "rule": "Walkthrough of the design approach",
       "result": "PASS",
-      "evidence": "method_walkthrough.md 23216 bytes"
+      "evidence": "method_walkthrough.md 42035 bytes"
     },
     {
       "section": "Steer away from",
@@ -46,7 +46,7 @@
       "section": "Steer away from",
       "rule": "Cofold shortlist of 50-100 designs (suggested maximum 100)",
       "result": "FAIL",
-      "evidence": "209 distinct designs cofolded. Submission is presented as a ranked top-50 shortlist plus 15 nominations; the additional cofolds were spent on REPLICATE SEEDS and controls, not on exploring more candidates before screening. See note below."
+      "evidence": "250 distinct designs cofolded. Submission is presented as a ranked top-50 shortlist plus 15 nominations; the additional cofolds were spent on REPLICATE SEEDS and controls, not on exploring more candidates before screening. See note below."
     },
     {
       "section": "Steer away from",
@@ -64,13 +64,13 @@
       "section": "Steer away from",
       "rule": "Use ipSAE to discard broken designs, then pick a diverse 15",
       "result": "PASS",
-      "evidence": "32 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
+      "evidence": "39 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
     },
     {
       "section": "Steer away from",
       "rule": "Never mutate the linker or the conserved cysteines",
       "result": "PASS",
-      "evidence": "linker violations=none; cysteine violations=none (all 149 submitted designs keep (GGGGS)x3 at 121-135 and C at [22, 96, 158, 223])"
+      "evidence": "linker violations=none; cysteine violations=none (all 249 submitted designs keep (GGGGS)x3 at 121-135 and C at [22, 96, 158, 223])"
     },
     {
       "section": "Steer away from",
