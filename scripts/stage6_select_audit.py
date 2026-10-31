@@ -171,8 +171,11 @@ def main() -> int:
             "LIS": fnum(a.get("LIS_mean")),
             "epitope_recovery": recov,
             "seeds": a.get("seeds", ""),
-            "n_new_liabilities": sum(int(x.split(":")[-1].strip() or 0) if ":" in x else 1
-                                     for x in newlia.split(";") if x.strip()) if newlia else 0,
+            # Recomputed from the sequence rather than parsed out of stage 2's
+            # human-readable warning string: the authoritative source is the
+            # sequence itself, and a free-text field is not a data format.
+            "n_new_liabilities": sum(v for k, v in hc.new_liabilities(seq).items()
+                                     if k != "nglyc_sequon"),
         })
     print(f"[assemble] {len(rows)} ipSAE-complete candidates, {len(excluded)} excluded")
 

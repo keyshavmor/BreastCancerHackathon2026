@@ -1,0 +1,97 @@
+{
+  "generated_utc": "2026-10-31T13:04:19.913510+00:00",
+  "overall": "PASS",
+  "failed_checks": 0,
+  "submitted_scored_count": 66,
+  "top_n": 15,
+  "excluded_count": 0,
+  "seed_noise_ipsae_sd": 0.0,
+  "parent_baseline": {
+    "ipsae_min": 0.7213,
+    "sd": 0.0,
+    "epitope_recovery": 1.0
+  },
+  "designs_above_parent_beyond_noise": 10,
+  "checks": [
+    {
+      "check": "parent_integrity",
+      "result": "PASS",
+      "detail": "len=242 sha256=0b9248c76a2b399791c47dbfa0d252b18284265f1dbca9ae8e66c0dd018c9f64"
+    },
+    {
+      "check": "internal_pool_exists",
+      "result": "PASS",
+      "detail": "50 internal candidates"
+    },
+    {
+      "check": "all_submitted_length_242",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "all_submitted_min_5_mutations",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "linker_intact",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "native_cysteines_preserved_no_new",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "submitted_sequences_unique",
+      "result": "PASS",
+      "detail": "66 rows, 66 unique"
+    },
+    {
+      "check": "mutation_signatures_unique",
+      "result": "PASS",
+      "detail": "66 unique signatures"
+    },
+    {
+      "check": "reconstructible_from_mutation_list",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "every_submitted_has_finite_ipsae",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "structure_and_pae_present_for_submitted",
+      "result": "PASS",
+      "detail": "violations=[]"
+    },
+    {
+      "check": "parent_baseline_scored",
+      "result": "PASS",
+      "detail": "parent ipsae_min=0.7213 over 1 seed(s)"
+    },
+    {
+      "check": "no_stale_EGFR_cetuximab_inputs",
+      "result": "PASS",
+      "detail": "files_with_stale_refs=[]"
+    },
+    {
+      "check": "top15_size",
+      "result": "PASS",
+      "detail": "15/15 nominees"
+    },
+    {
+      "check": "top15_branch_diversity",
+      "result": "PASS",
+      "detail": "branches=['A_h3', 'B_interface', 'C_mixed', 'D_framework']"
+    },
+    {
+      "check": "top15_distinct_mutation_sets",
+      "result": "PASS",
+      "detail": "each nominee has a distinct mutation signature"
+    }
+  ]
+}

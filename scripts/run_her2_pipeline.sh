@@ -34,8 +34,9 @@ SEQ_ENV="${SEQ_ENV:-her2_seq}"
 BOLTZ_ENV="${BOLTZ_ENV:-her2_boltz2}"
 CONDA_ROOT="${CONDA_ROOT:-$HOME/anaconda3}"
 
-POOL="${POOL:-40000}"          # raw AbLang2 proposals sampled
-SHORTLIST="${SHORTLIST:-4000}" # handed to ESM2-3B
+POOL="${POOL:-1000000}"        # raw AbLang2 proposals sampled (~200 s; measured to
+                               # beat 40k by +49% on the top-500 band)
+SHORTLIST="${SHORTLIST:-50000}" # handed to ESM2-3B (~37 min at batch 16)
 QUEUE="${QUEUE:-150}"          # total cofold queue length
 INTERNAL="${INTERNAL:-50}"     # curated internal proposal pool (deliverable)
 TOPN="${TOPN:-15}"             # lab nominations
@@ -88,7 +89,8 @@ fi
 if [ "$FROM" -le 2 ]; then
   banner "stage 2: AbLang2-guided candidate generation"
   t_stage 2 "$SEQ_PY" scripts/stage2_generate_candidates.py \
-    --pool-size "$POOL" --shortlist "$SHORTLIST" --outdir "$OUTDIR"
+    --pool-size "$POOL" --shortlist "$SHORTLIST" \
+    --id-prefix "${ID_PREFIX:-HER2_}" --outdir "$OUTDIR"
 fi
 
 # ---- stage 3: ESM2 rerank ---------------------------------------------------

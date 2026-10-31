@@ -20,8 +20,8 @@ four-hour wall-clock budget.
 
 ```text
 stage 1  target prep     1N8Z + UniProt P04626  ->  residue map, HER2 domain IV crop
-stage 2  generation      AbLang2-guided sampling ->  40,000 valid candidates -> 4,000 shortlist
-stage 3  rerank          ESM2-3B                 ->  internal 50 + 150-entry cofold queue
+stage 2  generation      AbLang2-guided sampling ->  1,000,000 candidates -> 50,000 shortlist
+stage 3  rerank          ESM2-3B                 ->  internal 50 + cofold queue
 stage 4  cofold          Boltz-2, cached MSAs    ->  structures + full PAE
 stage 5  ipSAE           DunbrackLab/IPSAE       ->  real ipSAE + epitope-recovery QC
 stage 6  select & audit  multi-objective ranking ->  submission_scored.*, top_15_scored.*
@@ -45,7 +45,7 @@ All figures measured on this machine, not estimated.
 | Stage | Cost | Peak VRAM | Notes |
 | --- | --- | --- | --- |
 | AbLang2 masked site scan | **0.7 s** / 217 positions | ~1 GB | one-time, pool-size independent |
-| AbLang2 generation | **42 s** / 40,000 candidates | ~1 GB | CPU-bound filtering |
+| AbLang2 generation | **42 s** / 40,000; **198 s** / 1,000,000 | ~1 GB | CPU-bound filtering |
 | ESM2-3B load | 24-32 s | 10.7 GiB (bf16) | weights cached locally |
 | ESM2-3B masked scan | **6.8 s** / 223 positions | 10.7 GiB | one-time |
 | ESM2-3B contextual | **62 ms** / candidate | 10.7 GiB | 4,000 in ~2 min |
@@ -66,14 +66,31 @@ All figures measured on this machine, not estimated.
 3. **Masked site scans instead of per-candidate model calls.** Both language
    models are run once over the mutable positions to build a
    `position x amino-acid` Δlog-P table; scoring a candidate is then a table
-   lookup. This is what makes a 40,000-candidate pool essentially free, and it
-   is why the Catalyst-style "1M sequences" funnel is not the right shape here:
-   under an additive objective a huge pool buys *diversity coverage*, not better
-   scores.
+   lookup. A **1,000,000-candidate pool costs ~200 s**, essentially all of it CPU
+   filtering.
 4. **Batched Boltz invocation.** One `boltz predict` over a directory of 25 YAMLs
    pays the ~25 s model load once rather than per structure.
 5. **One GPU model at a time.** ESM2-3B (10.7 GiB) and Boltz-2 (19 GiB) are never
    co-resident; 19 GiB peak also means **do not** run two Boltz jobs on a 24 GB card.
+
+### Does a bigger candidate pool actually help? Measured: yes
+
+A plausible-sounding argument says it should not — the additive site-delta
+objective has a deterministic optimum, so extra samples should only fill in the
+ranking. **That argument is wrong here, and we tested it rather than assuming
+it.** Sampling is random over a combinatorial space of roughly 10^12 valid
+designs (217 mutable positions, top-5 substitutions each, 5-8 at a time), so
+40,000 draws barely scratch it:
+
+| Pool | Best additive score | Top-50 mean | Top-500 mean |
+| --- | ---: | ---: | ---: |
+| 40,000 | 3.339 | 2.355 | 1.709 |
+| **1,000,000** | **3.602** | **3.001** (+27%) | **2.540** (+49%) |
+
+The top-500 band is what actually feeds the structural stage, and it improves by
+~49%. Since the cost is ~200 s of CPU, the default pool is **1,000,000**. The
+lesson generalises: when a stage is cheap and the search space is enormous,
+measure the saturation point instead of reasoning about it.
 
 ## The immutable parent
 

@@ -207,13 +207,18 @@ def main() -> int:
           f"{len(inside)} intact disulfides, 0 split")
 
     # Every observed contact must survive the crop, else the epitope is clipped.
-    contact_res = sorted(k[0] for k, d in min_distance_matrix(
-        atoms["C"], np.vstack([r["xyz"] for ch in "AB" for r in atoms[ch].values()])).items()
-        if d <= NEAR_CUTOFF_A)
+    her2_to_fab = min_distance_matrix(
+        atoms["C"], np.vstack([r["xyz"] for ch in "AB" for r in atoms[ch].values()]))
+    contact_res = sorted(k[0] for k, d in her2_to_fab.items() if d <= NEAR_CUTOFF_A)
+    # Direct contacts are tracked separately because stage 5 compares a model's
+    # <=4.5 A contact set against the experimental epitope. Using the 8 A set as
+    # the denominator would systematically understate epitope recovery.
+    direct_res = sorted(k[0] for k, d in her2_to_fab.items() if d <= DIRECT_CUTOFF_A)
     outside = [r for r in contact_res if not lo <= r <= hi]
     if outside:
         raise SystemExit(f"crop excludes contact residues {outside}")
-    print(f"[ok] all {len(contact_res)} contact residues (mature {contact_res[0]}-{contact_res[-1]}) inside crop")
+    print(f"[ok] all {len(contact_res)} contact residues (mature {contact_res[0]}-{contact_res[-1]}) "
+          f"inside crop; {len(direct_res)} are direct (<={DIRECT_CUTOFF_A} A)")
 
     hc.write_fasta(args.outdir / "her2_domain_iv.fasta", {
         f"HER2_domainIV_1N8Z_C_mature{lo}-{hi}_uniprot"
@@ -257,6 +262,8 @@ def main() -> int:
             "domain_iv_sequence": crop_seq,
             "intact_disulfides_in_crop": [list(b) for b in inside],
             "epitope_contacts_mature": contact_res,
+            "epitope_direct_mature": direct_res,
+            "epitope_cutoffs": {"direct_A": DIRECT_CUTOFF_A, "near_A": NEAR_CUTOFF_A},
             "complex_residues_for_boltz": hc.PARENT_LEN + len(crop_seq),
         },
         "geometry_bins": {"direct_A": DIRECT_CUTOFF_A, "near_A": NEAR_CUTOFF_A,

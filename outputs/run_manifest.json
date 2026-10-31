@@ -1,0 +1,44 @@
+{
+  "generated_utc": "2026-10-31T13:04:19.913675+00:00",
+  "repo_commit": "be9699fc1e920f02b2a72891bea142dc311ecfd6",
+  "repo_dirty": true,
+  "parent_sha256": "0b9248c76a2b399791c47dbfa0d252b18284265f1dbca9ae8e66c0dd018c9f64",
+  "weights_primary": {
+    "sequence_consensus": 0.3,
+    "ipsae": 0.25,
+    "epitope_recovery": 0.2,
+    "structural_confidence": 0.15,
+    "developability": 0.1
+  },
+  "sensitivity_schemes": {
+    "ipsae_heavy": {
+      "sequence_consensus": 0.15,
+      "ipsae": 0.5,
+      "epitope_recovery": 0.15,
+      "structural_confidence": 0.1,
+      "developability": 0.1
+    },
+    "sequence_heavy": {
+      "sequence_consensus": 0.5,
+      "ipsae": 0.15,
+      "epitope_recovery": 0.15,
+      "structural_confidence": 0.1,
+      "developability": 0.1
+    },
+    "equal": {
+      "sequence_consensus": 0.2,
+      "ipsae": 0.2,
+      "epitope_recovery": 0.2,
+      "structural_confidence": 0.2,
+      "developability": 0.2
+    }
+  },
+  "min_epitope_recovery": 0.3,
+  "counts": {
+    "scored_submission": 66,
+    "top_n": 15,
+    "internal_pool": 50,
+    "excluded": 0
+  },
+  "claim_boundary": "Model scores rank designs for experimental triage. No in-silico K_D is claimed. ipSAE is not an affinity measurement."
+}

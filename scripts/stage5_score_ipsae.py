@@ -238,8 +238,14 @@ def main() -> int:
     args.outdir.mkdir(parents=True, exist_ok=True)
 
     contract = json.loads(args.contract.read_text())
-    epitope = contract["target"]["epitope_contacts_mature"]
-    crop_start = contract["target"]["domain_iv_mature"][0]
+    # Compare like with like: the model's <=4.5 A contacts against the
+    # experimentally DIRECT (<=4.5 A) epitope. Falls back to the 8 A set for
+    # contracts written before that field existed.
+    tgt = contract["target"]
+    epitope = tgt.get("epitope_direct_mature") or tgt["epitope_contacts_mature"]
+    print(f"[epitope] denominator = {len(epitope)} residues "
+          f"({'direct <=4.5A' if tgt.get('epitope_direct_mature') else 'near <=8A fallback'})")
+    crop_start = tgt["domain_iv_mature"][0]
 
     preds = sorted({p for p in (args.run_dir / "out").glob("boltz_results_*/predictions/*")
                     if p.is_dir()})

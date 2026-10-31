@@ -304,6 +304,13 @@ def main() -> int:
     ap.add_argument("--min-mut", type=int, default=hc.MIN_MUTATIONS)
     ap.add_argument("--max-mut", type=int, default=hc.MAX_MUTATIONS_POLICY)
     ap.add_argument("--seed", type=int, default=20261031)
+    ap.add_argument("--id-prefix", default="HER2_",
+                    help="candidate_id namespace. MUST differ between generation rounds: "
+                         "ids are assigned by rank, so reusing a prefix would bind an "
+                         "already-cofolded id to a different sequence.")
+    ap.add_argument("--diverse-shortlist-max", type=int, default=2000,
+                    help="above this per-branch size, take top-by-score instead of "
+                         "farthest-point selection (which costs O(k*pool_cap))")
     ap.add_argument("--device", default="cuda")
     args = ap.parse_args()
     args.outdir.mkdir(parents=True, exist_ok=True)
@@ -395,9 +402,17 @@ def main() -> int:
     kept.sort(key=lambda d: -d["ablang2_additive_mean"])
     short_per_branch = max(1, args.shortlist // len(branches))
     shortlist: list[dict] = []
+    # Farthest-point selection costs O(k * pool_cap); at a 50k shortlist that is
+    # ~1e9 set operations. Diversity only has to be enforced where the selection
+    # is small and final (stage 3's internal 50, stage 6's top 15), so for large
+    # shortlists take the score-ordered head instead.
+    use_diverse = short_per_branch <= args.diverse_shortlist_max
     for branch in branches:
         pool = [d for d in kept if d["branch"] == branch]
-        shortlist += greedy_diverse(pool, short_per_branch)
+        shortlist += (greedy_diverse(pool, short_per_branch) if use_diverse
+                      else pool[:short_per_branch])
+    print(f"[shortlist] selection={'farthest-point' if use_diverse else 'top-by-score'} "
+          f"({short_per_branch}/branch)")
     print(f"[shortlist] {len(shortlist)} candidates for ESM2 rerank")
 
     # Contextual AbLang2 rescore, shortlist only.
@@ -410,7 +425,7 @@ def main() -> int:
 
     # ---- write artifacts -------------------------------------------------- #
     def cid(i: int) -> str:
-        return f"HER2_{i:04d}"
+        return f"{args.id_prefix}{i:04d}"
 
     for i, d in enumerate(sorted(kept, key=lambda x: -x["ablang2_additive_mean"]), 1):
         d["candidate_id"] = cid(i)

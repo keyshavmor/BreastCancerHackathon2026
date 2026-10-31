@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-31T12:20:31.253980+00:00",
+  "generated_utc": "2026-10-31T13:02:28.015804+00:00",
   "parent": {
     "sequence": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -142,6 +142,31 @@
       606,
       607
     ],
+    "epitope_direct_mature": [
+      557,
+      558,
+      560,
+      561,
+      569,
+      570,
+      571,
+      572,
+      573,
+      579,
+      591,
+      593,
+      596,
+      598,
+      600,
+      602,
+      603,
+      604,
+      605
+    ],
+    "epitope_cutoffs": {
+      "direct_A": 4.5,
+      "near_A": 8.0
+    },
     "complex_residues_for_boltz": 361
   },
   "geometry_bins": {
