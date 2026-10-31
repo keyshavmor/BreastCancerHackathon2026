@@ -74,10 +74,14 @@ def write_retargeted_msa(rows: list[tuple[str, str]], query: str, dest: Path) ->
 
 
 def write_yaml(dest: Path, target_seq: str, binder_seq: str,
-               target_msa: Path | str, binder_msa: Path | str) -> None:
-    """Emit a two-chain Boltz YAML: chain T = HER2 domain IV, chain B = scFv."""
+               target_msa: Path | str | None, binder_msa: Path | str | None) -> None:
+    """Emit a two-chain Boltz YAML: chain T = HER2 domain IV, chain B = scFv.
+
+    A ``None`` msa omits the key entirely, which is what ``--msa-mode fresh``
+    needs so that Boltz computes the alignment itself via the MSA server.
+    """
     def msa_line(v) -> str:
-        return f"      msa: {v}\n"
+        return "" if v is None else f"      msa: {v}\n"
     dest.write_text(
         "version: 1\n"
         "sequences:\n"
@@ -122,6 +126,9 @@ def run_batch(yaml_dir: Path, out_dir: Path, seed: int, args) -> tuple[int, floa
     ]
     if args.no_kernels:
         cmd.append("--no_kernels")
+    if args.msa_mode == "fresh":
+        # Let Boltz derive a genuine alignment for each candidate's own sequence.
+        cmd.append("--use_msa_server")
     log = out_dir / f"boltz_batch_seed{seed}.log"
     out_dir.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
@@ -146,9 +153,15 @@ def main() -> int:
     ap.add_argument("--replicate-top", type=int, default=0,
                     help="additionally re-run the top N queue entries under every seed")
     ap.add_argument("--skip-parent", action="store_true")
-    ap.add_argument("--msa-mode", choices=["retarget", "share", "empty"], default="retarget",
+    ap.add_argument("--msa-mode", choices=["retarget", "share", "empty", "fresh"],
+                    default="retarget",
                     help="retarget: per-candidate query row (default); share: reuse parent MSA "
-                         "verbatim; empty: single-sequence mode (documented lower-confidence)")
+                         "verbatim; empty: single-sequence mode (documented lower-confidence); "
+                         "fresh: one MSA-server call PER candidate. 'fresh' is the control for "
+                         "the MSA-reuse confound - under reuse, a design further from the parent "
+                         "has weaker homolog support at more columns, which can masquerade as a "
+                         "mutation-count effect on confidence. ~100 s/design, so use it on a "
+                         "small matched subset, not a campaign.")
     ap.add_argument("--cache", default="~/.boltz")
     ap.add_argument("--diffusion-samples", type=int, default=1)
     ap.add_argument("--recycling-steps", type=int, default=3)
@@ -167,7 +180,7 @@ def main() -> int:
     target_seq = next(iter(hc.read_fasta(args.target_fasta).values()))
     target_msa_src = args.msa_dir / "her2_domain_iv.csv"
     binder_msa_src = args.msa_dir / "scfv_parent.csv"
-    use_msa = args.msa_mode != "empty"
+    use_msa = args.msa_mode not in ("empty", "fresh")
     if use_msa:
         for p in (target_msa_src, binder_msa_src):
             if not p.is_file():
@@ -233,6 +246,8 @@ def main() -> int:
                     else:
                         bm = binder_msa_src
                     tm = target_msa_src
+                elif args.msa_mode == "fresh":
+                    bm = tm = None          # omitted entirely; boltz queries the server
                 else:
                     bm = tm = "empty"
                 write_yaml(bdir / f"{name}.yaml", target_seq, seq, tm, bm)

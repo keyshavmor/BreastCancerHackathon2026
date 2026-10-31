@@ -1,0 +1,35 @@
+# her2_modal - LOCAL client environment for deploying the cofold stage to Modal.
+#
+# Important: Modal does not run conda environments. Remote containers are built
+# from the image definition in modal/her2_modal_app.py (pip-based, including the
+# cuequivariance wheels that boltz does not declare). This environment only needs
+# the Modal client plus enough to read and write the pipeline's CSV queues.
+#
+# Create and authenticate:
+#   conda env create -f envs/her2_modal.yml
+#   conda activate her2_modal
+#   modal token new
+#
+# One-time remote cache population (~3 GB into a persistent Volume):
+#   modal run modal/her2_modal_app.py::populate_cache
+#
+# Then fan out a queue:
+#   modal run modal/her2_modal_app.py \
+#     --queue outputs/priority_cofold_queue_merged.csv --limit 1000 --batch-size 50
+#
+# See modal/README.md for cost analysis. Headline: use MORE 24 GB containers
+# rather than bigger GPUs - cost per structure rises with GPU size, because a
+# 361-residue complex does not saturate a larger card.
+name: her2_modal
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      # Validated against modal 1.6.3; the app's Image/Volume/gpu API usage is
+      # checked by importing the module locally (no credits spent).
+      - modal>=1.6
+      # Only needed for local queue handling and result inspection.
+      - numpy
+      - pandas

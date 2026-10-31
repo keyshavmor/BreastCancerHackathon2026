@@ -1,0 +1,154 @@
+{
+  "n_scored": 149,
+  "spearman": {
+    "ablang2_contextual": {
+      "ipsae_min": {
+        "rho": 0.1217,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.041,
+        "n": 149
+      },
+      "iptm": {
+        "rho": 0.1004,
+        "n": 149
+      }
+    },
+    "esm2_contextual": {
+      "ipsae_min": {
+        "rho": -0.1823,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.0077,
+        "n": 149
+      },
+      "iptm": {
+        "rho": -0.1961,
+        "n": 149
+      }
+    },
+    "ablang2_additive_mean": {
+      "ipsae_min": {
+        "rho": -0.2922,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.2648,
+        "n": 149
+      },
+      "iptm": {
+        "rho": -0.3157,
+        "n": 149
+      }
+    },
+    "esm2_additive_mean": {
+      "ipsae_min": {
+        "rho": -0.2891,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.1545,
+        "n": 149
+      },
+      "iptm": {
+        "rho": -0.325,
+        "n": 149
+      }
+    },
+    "sequence_consensus_score": {
+      "ipsae_min": {
+        "rho": -0.2234,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.1693,
+        "n": 149
+      },
+      "iptm": {
+        "rho": -0.2552,
+        "n": 149
+      }
+    },
+    "mutation_count": {
+      "ipsae_min": {
+        "rho": -0.2656,
+        "n": 149
+      },
+      "epitope_recovery": {
+        "rho": -0.0545,
+        "n": 149
+      },
+      "iptm": {
+        "rho": -0.2733,
+        "n": 149
+      }
+    }
+  },
+  "by_mutation_count": {
+    "5": {
+      "n": 21,
+      "ipsae_min_mean": 0.6588,
+      "ipsae_min_sd": 0.0887,
+      "iptm_mean": 0.882,
+      "epitope_recovery_mean": 0.9323
+    },
+    "6": {
+      "n": 32,
+      "ipsae_min_mean": 0.5781,
+      "ipsae_min_sd": 0.2137,
+      "iptm_mean": 0.8259,
+      "epitope_recovery_mean": 0.9046
+    },
+    "7": {
+      "n": 31,
+      "ipsae_min_mean": 0.6507,
+      "ipsae_min_sd": 0.0819,
+      "iptm_mean": 0.8786,
+      "epitope_recovery_mean": 0.9525
+    },
+    "8": {
+      "n": 65,
+      "ipsae_min_mean": 0.5754,
+      "ipsae_min_sd": 0.1252,
+      "iptm_mean": 0.8487,
+      "epitope_recovery_mean": 0.9255
+    }
+  },
+  "by_branch": {
+    "A_h3": {
+      "n": 28,
+      "ipsae_min_mean": 0.4952,
+      "ipsae_min_sd": 0.1561,
+      "iptm_mean": 0.8065,
+      "epitope_recovery_mean": 0.8797
+    },
+    "B_interface": {
+      "n": 33,
+      "ipsae_min_mean": 0.6385,
+      "ipsae_min_sd": 0.1149,
+      "iptm_mean": 0.8684,
+      "epitope_recovery_mean": 0.9043
+    },
+    "C_mixed": {
+      "n": 61,
+      "ipsae_min_mean": 0.6099,
+      "ipsae_min_sd": 0.1435,
+      "iptm_mean": 0.8567,
+      "epitope_recovery_mean": 0.9405
+    },
+    "D_framework": {
+      "n": 27,
+      "ipsae_min_mean": 0.6579,
+      "ipsae_min_sd": 0.091,
+      "iptm_mean": 0.8834,
+      "epitope_recovery_mean": 0.9766
+    }
+  },
+  "parent_reference": {
+    "ipsae_min": 0.7213,
+    "epitope_recovery": 1.0
+  },
+  "interpretation": "Negative rho means a HIGHER sequence-plausibility score goes with a WORSE modelled interface. Trastuzumab's CDRs are affinity-matured, so an antibody language model tends to propose reverting them toward germline consensus - precisely the residues contacting HER2. The mutation_count effect is partly confounded by MSA reuse."
+}

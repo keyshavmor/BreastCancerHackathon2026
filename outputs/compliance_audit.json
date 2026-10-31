@@ -1,17 +1,17 @@
 {
-  "generated_utc": "2026-10-31T13:04:19.913510+00:00",
+  "generated_utc": "2026-10-31T13:27:41.258082+00:00",
   "overall": "PASS",
   "failed_checks": 0,
-  "submitted_scored_count": 66,
+  "submitted_scored_count": 149,
   "top_n": 15,
-  "excluded_count": 0,
+  "excluded_count": 1,
   "seed_noise_ipsae_sd": 0.0,
   "parent_baseline": {
     "ipsae_min": 0.7213,
     "sd": 0.0,
     "epitope_recovery": 1.0
   },
-  "designs_above_parent_beyond_noise": 10,
+  "designs_above_parent_beyond_noise": 26,
   "checks": [
     {
       "check": "parent_integrity",
@@ -46,12 +46,12 @@
     {
       "check": "submitted_sequences_unique",
       "result": "PASS",
-      "detail": "66 rows, 66 unique"
+      "detail": "149 rows, 149 unique"
     },
     {
       "check": "mutation_signatures_unique",
       "result": "PASS",
-      "detail": "66 unique signatures"
+      "detail": "149 unique signatures"
     },
     {
       "check": "reconstructible_from_mutation_list",
