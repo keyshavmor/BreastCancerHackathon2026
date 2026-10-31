@@ -1,0 +1,74 @@
+{
+  "generated_utc": "2026-10-31T15:55:37+00:00",
+  "funnel": {
+    "ablang2_candidates": 40000,
+    "esm2_shortlist": 4000,
+    "designs_cofolded": 250,
+    "designs_with_ipsae": 248,
+    "ranked_submission": 50,
+    "lab_nominations": 15
+  },
+  "compute": {
+    "structures_total": 2432,
+    "structures_local": 629,
+    "structures_modal": 1803,
+    "modal_cost_usd_approx": 8.29,
+    "local_gpu": "1x RTX 3090 24 GB"
+  },
+  "statistics": {
+    "parent_ipsae_mean": 0.7003,
+    "parent_ipsae_sd": 0.0546,
+    "parent_n_seeds": 42,
+    "single_seed_reliability": 0.504,
+    "median_seeds_per_design": 8,
+    "designs_tested": 249,
+    "expected_false_positives_uncorrected": 12.5,
+    "above_parent_fdr": 7,
+    "below_parent": 135
+  },
+  "target": {
+    "domain_iv_mature": [
+      489,
+      607
+    ],
+    "domain_iv_length": 119,
+    "complex_residues": 361,
+    "epitope_contacts": 19
+  },
+  "strategies": {
+    "A_h3": {
+      "label": "CDR-H3 focused",
+      "where": "edits concentrated in CDR-H3, the antibody's main binding loop",
+      "why": "published work reports CDR-H3 as the most productive region to mature",
+      "result": "scored WORST here, contradicting that expectation"
+    },
+    "B_interface": {
+      "label": "Contact region",
+      "where": "edits on or beside residues that physically touch HER2, excluding CDR-H3",
+      "why": "changes near the interface can improve complementarity without touching H3",
+      "result": "second best; produced two of the significant designs"
+    },
+    "C_mixed": {
+      "label": "Mixed",
+      "where": "a few edits near the contact surface plus supporting edits elsewhere",
+      "why": "tests whether distant changes can reinforce a contact-region change",
+      "result": "produced the most statistically significant designs"
+    },
+    "D_framework": {
+      "label": "Scaffold only",
+      "where": "edits only in the structural framework; the binding site is left untouched",
+      "why": "a deliberate control: can we change the molecule without disturbing binding?",
+      "result": "best average interface quality, and the safest edits"
+    }
+  },
+  "winners_fdr": [
+    "HER2_1238",
+    "HER2_13625",
+    "HER2_17118",
+    "HER2_18216",
+    "HER2_17641",
+    "HER2_14514",
+    "HER2B_2696"
+  ],
+  "claim_boundary": "ipSAE is interface confidence from a structure predictor, not a binding affinity. No K_D is predicted."
+}

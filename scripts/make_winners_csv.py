@@ -33,9 +33,25 @@ from pathlib import Path
 
 import her2_common as hc
 
+# Internal branch codes are jargon; every export carries a plain-language label
+# so a reader never has to decode "C_mixed".
+STRATEGY_LABEL = {
+    "A_h3": "CDR-H3 focused",
+    "B_interface": "Contact region",
+    "C_mixed": "Mixed",
+    "D_framework": "Scaffold only",
+}
+STRATEGY_MEANING = {
+    "A_h3": "edits concentrated in CDR-H3, the main binding loop",
+    "B_interface": "edits on or beside residues that touch HER2, excluding CDR-H3",
+    "C_mixed": "a few edits near the contact surface plus supporting edits elsewhere",
+    "D_framework": "edits only in the structural scaffold, binding site left alone",
+}
+
 COLUMNS = [
     # identity / rank
-    "rank", "candidate_id", "branch", "selected_top15", "priority_tier",
+    "rank", "candidate_id", "strategy", "strategy_meaning", "branch",
+    "selected_top15", "priority_tier",
     # sequence and edits
     "mutation_count", "mutations_1based", "mutated_domains", "mutated_CDRs",
     "mutations_at_experimental_interface", "new_cysteine_count", "new_liability_flags",
@@ -107,6 +123,17 @@ def main() -> int:
 
     binders = {b["candidate_id"]: b for b in read_csv(o / "binder_summary.csv")}
 
+    # Order: FDR-significant designs first, then the multi-objective rank. The
+    # table is read top-down, so the designs with corrected statistical evidence
+    # should not be scattered through it.
+    def _fdr_first(r):
+        t = tests.get(r["candidate_id"], {})
+        return (0 if t.get("verdict_fdr") == "ABOVE_PARENT_FDR" else 1,
+                fnum(r.get("rank")) or 9e9)
+    scored = sorted(scored, key=_fdr_first)
+    for i, r in enumerate(scored[: args.top], 1):
+        r = dict(r, rank=i)
+
     rows_out: list[dict] = []
     for r in scored[: args.top]:
         cid = r["candidate_id"]
@@ -126,6 +153,8 @@ def main() -> int:
             "rank": r.get("rank", ""),
             "candidate_id": cid,
             "branch": r.get("branch", ""),
+            "strategy": STRATEGY_LABEL.get(r.get("branch", ""), r.get("branch", "")),
+            "strategy_meaning": STRATEGY_MEANING.get(r.get("branch", ""), ""),
             "selected_top15": cid in top15,
             "priority_tier": r.get("priority_tier", ""),
             "mutation_count": v.mutation_count,

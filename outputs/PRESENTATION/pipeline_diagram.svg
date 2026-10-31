@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 340" width="1240" height="340" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#52514e"/></marker></defs>
+<rect width="1240" height="340" fill="#fcfcfb"/>
+<text x="24" y="36" font-size="21" font-weight="700" fill="#0b0b0b">How a million candidates become fifteen lab tests</text>
+<text x="24" y="60" font-size="13" fill="#52514e">Cheap filters first. Nothing expensive runs on a candidate a cheap test already rejected.</text>
+<rect x="24" y="96" width="150" height="92" rx="10" fill="#9a9890"/>
+<text x="99.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Parent scFv</text>
+<text x="99.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">242 aa, 0.82 pM</text>
+<text x="99.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">trastuzumab</text>
+<text x="99.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">frozen + SHA-verified</text>
+<path d="M178 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="194" y="96" width="150" height="92" rx="10" fill="#2a78d6"/>
+<text x="269.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Generate</text>
+<text x="269.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">40,000</text>
+<text x="269.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">candidates</text>
+<text x="269.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">AbLang2, 4 strategies</text>
+<path d="M348 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="364" y="96" width="150" height="92" rx="10" fill="#2a78d6"/>
+<text x="439.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Screen</text>
+<text x="439.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">4,000</text>
+<text x="439.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">shortlisted</text>
+<text x="439.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">ESM2-3B, 2nd opinion</text>
+<path d="M518 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="534" y="96" width="150" height="92" rx="10" fill="#eb6834"/>
+<text x="609.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Fold</text>
+<text x="609.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">250</text>
+<text x="609.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">designs cofolded</text>
+<text x="609.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">Boltz-2, HER2 domain IV</text>
+<path d="M688 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="704" y="96" width="150" height="92" rx="10" fill="#eb6834"/>
+<text x="779.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Replicate</text>
+<text x="779.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">2,432</text>
+<text x="779.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">structures</text>
+<text x="779.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">median 8 runs each</text>
+<path d="M858 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="874" y="96" width="150" height="92" rx="10" fill="#1baf7a"/>
+<text x="949.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Score</text>
+<text x="949.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">248</text>
+<text x="949.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">with real ipSAE</text>
+<text x="949.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">DunbrackLab ipSAE</text>
+<path d="M1028 142.0 l12 0" stroke="#52514e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="1044" y="96" width="150" height="92" rx="10" fill="#0ca30c"/>
+<text x="1119.0" y="120" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Select</text>
+<text x="1119.0" y="144" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">50 ranked</text>
+<text x="1119.0" y="163" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">15 nominated</text>
+<text x="1119.0" y="208" font-size="11" fill="#52514e" text-anchor="middle">multi-objective + FDR</text>
+<rect x="24" y="244" width="1192" height="68" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="40" y="269" font-size="13" font-weight="700" fill="#0b0b0b">Two guard rails</text>
+<text x="40" y="290" font-size="12.5" fill="#52514e">1. A single fold is only 0.504 reliable, so every design is folded many times and reported with an error bar.</text>
+<text x="40" y="307" font-size="12.5" fill="#52514e">2. Testing 249 designs would yield about 12.5 false winners by chance, so Benjamini-Hochberg correction is applied before any design is called better.</text>
+</svg>
