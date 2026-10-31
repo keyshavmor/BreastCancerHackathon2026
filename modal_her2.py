@@ -33,6 +33,9 @@ def run_pipeline(smoke: bool = False, from_stage: int | None = None):
     import subprocess, os
     env = os.environ.copy()
     env["PATH"] = "/opt/conda/bin:" + env.get("PATH", "")
+    env["CONDA_ROOT"] = "/opt/conda"
+    env["SEQ_ENV"] = "her2_seq"
+    env["BOLTZ_ENV"] = "her2_boltz2"
     if smoke:
         env["SMOKE"] = "1"
     if from_stage is not None:
