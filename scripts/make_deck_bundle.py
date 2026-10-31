@@ -192,7 +192,17 @@ def main() -> int:
     audit = load_json(o / "compliance_audit.json")
     diag = load_json(o / "score_diagnostics.json")
     contract = load_json(o / "contract.json")
-    m2 = load_json(o / "stage2_manifest.json")
+    # Generation ran in two rounds writing to different directories. Reading only
+    # the first understates the pool by 25x, so sum every manifest found.
+    gen_manifests = [load_json(o / "stage2_manifest.json"),
+                     load_json(o / "round2" / "stage2_manifest.json")]
+    gen_manifests = [g for g in gen_manifests if g.get("candidates_kept")]
+    m2 = {
+        "candidates_kept": sum(g.get("candidates_kept", 0) for g in gen_manifests),
+        "shortlist": sum(g.get("shortlist", 0) for g in gen_manifests),
+        "rounds": [{"pool": g.get("candidates_kept"), "shortlist": g.get("shortlist"),
+                    "id_prefix": g.get("id_prefix", "HER2_")} for g in gen_manifests],
+    }
     rel = diag.get("reliability") or {}
     pc = rel.get("parent_comparison") or {}
     raw = [r for r in read_csv(o / "boltz_results_raw.csv") if r.get("ipsae_status") == "PASSED"]
@@ -209,6 +219,7 @@ def main() -> int:
         "funnel": {
             "ablang2_candidates": m2.get("candidates_kept"),
             "esm2_shortlist": m2.get("shortlist"),
+            "generation_rounds": m2.get("rounds"),
             "designs_cofolded": len(seeds),
             "designs_with_ipsae": audit.get("submitted_scored_count"),
             "ranked_submission": 50,

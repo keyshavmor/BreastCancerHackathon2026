@@ -1,8 +1,20 @@
 {
-  "generated_utc": "2026-10-31T15:55:37+00:00",
+  "generated_utc": "2026-10-31T16:33:21+00:00",
   "funnel": {
-    "ablang2_candidates": 40000,
-    "esm2_shortlist": 4000,
+    "ablang2_candidates": 1040000,
+    "esm2_shortlist": 54000,
+    "generation_rounds": [
+      {
+        "pool": 40000,
+        "shortlist": 4000,
+        "id_prefix": "HER2_"
+      },
+      {
+        "pool": 1000000,
+        "shortlist": 50000,
+        "id_prefix": "HER2_"
+      }
+    ],
     "designs_cofolded": 250,
     "designs_with_ipsae": 248,
     "ranked_submission": 50,
