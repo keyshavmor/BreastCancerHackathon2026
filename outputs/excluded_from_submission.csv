@@ -1,2 +1,3 @@
 candidate_id,reason
+HER2B_1893,epitope_recovery 0.2807 < 0.3
 HER2_15668,epitope_recovery 0.0 < 0.3

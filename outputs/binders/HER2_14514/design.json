@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_14514",
-  "generated_utc": "2026-10-31T15:08:29.377779+00:00",
+  "generated_utc": "2026-10-31T15:11:49.283391+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDYYIHWVRQAPGKGLEWVARVYPTEGYTRYADSVKGRFTISADTSKNTAYLEMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVPSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQHKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -33,28 +33,28 @@
     "reconstructible_from_parent": true
   },
   "scores": {
-    "rank": "33",
-    "ipsae_min": "0.756",
-    "ipsae_min_sd": "0.0168",
-    "ipsae_max": "0.8747",
-    "ipsae_delta_vs_parent": "0.0433",
+    "rank": "13",
+    "ipsae_min": "0.7486",
+    "ipsae_min_sd": "0.0128",
+    "ipsae_max": "0.8705",
+    "ipsae_delta_vs_parent": "0.0631",
     "ipsae_interpretation": "WITHIN_SEED_NOISE",
     "interface_status": "OK",
-    "n_seeds": "11",
-    "seeds": "101;13;42;7;1001;1002;1003;1004;1005;1006;1007",
-    "iptm": "0.9145",
-    "pDockQ": "0.4859",
-    "LIS": "0.6302",
-    "epitope_recovery": "0.9234",
+    "n_seeds": "4",
+    "seeds": "101;13;42;7",
+    "iptm": "0.9122",
+    "pDockQ": "0.496",
+    "LIS": "0.6238",
+    "epitope_recovery": "0.9605",
     "ablang2_contextual": "-0.67",
     "esm2_contextual": "-1.4632",
     "sequence_consensus_score": "0.5268",
-    "rank_score": "0.6952",
-    "max_rank_shift_under_reweighting": "40"
+    "rank_score": "0.7342",
+    "max_rank_shift_under_reweighting": "45"
   },
   "structure": {
-    "representative_run": "HER2_14514_seed7",
-    "representative_seed": "7",
+    "representative_run": "HER2_14514_seed101",
+    "representative_seed": "101",
     "selection_rule": "replicate whose ipSAE is closest to the design mean",
     "cif": "complex.cif",
     "target": {
@@ -70,18 +70,15 @@
       "sequence": "CHQLCARGHCWGPGPTQCVNCSQFLRGQECVEECRVLQGLPREYVNARHCLPCHPECQPQNGSVTCFGPEADQCVACAHYKDPPFCVARCPSGVKPDLSYMPIWKFPDEEGACQPCPIN"
     },
     "modelled_interface": {
-      "n_contacts": 31,
+      "n_contacts": 29,
       "her2_residues_contacted_mature": [
-        555,
         558,
         560,
         561,
-        569,
         571,
         572,
         573,
         582,
-        584,
         585,
         586,
         587,
@@ -91,13 +88,13 @@
         593,
         598,
         602,
-        603
+        603,
+        605
       ],
       "experimental_epitope_recovered": [
         558,
         560,
         561,
-        569,
         571,
         572,
         573,
@@ -105,7 +102,8 @@
         593,
         598,
         602,
-        603
+        603,
+        605
       ],
       "experimental_epitope_total": 19,
       "recovery_fraction": 0.6316

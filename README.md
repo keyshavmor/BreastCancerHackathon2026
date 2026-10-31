@@ -92,6 +92,55 @@ The top-500 band is what actually feeds the structural stage, and it improves by
 lesson generalises: when a stage is cheap and the search space is enormous,
 measure the saturation point instead of reasoning about it.
 
+## Results
+
+A full campaign was run across one local RTX 3090 and Modal GPUs.
+
+| Quantity | Value |
+| --- | ---: |
+| Boltz-2 structures scored | **553** (Local 553 / Modal 0) |
+| Designs with a genuine external ipSAE | **248** |
+| Ranked submission set / lab nominations | 50 / 15 |
+| Parent baseline | **0.6855 +/- 0.0595** over 7 seeds |
+| Compliance audit | **PASS** (0 failed checks) |
+
+### Measurement reliability came first
+
+A single Boltz-2 seed carries reliability **0.583** on this system:
+more than a third of the variance in a one-seed ranking is seed noise, not design
+quality. Everything else follows from that number. Designs are therefore reported
+as replicate means with error bars, and `3` seeds
+are needed for reliability 0.8.
+
+### Three designs exceed the parent after multiple-comparison correction
+
+163 designs were tested against the parent. At an uncorrected alpha of 0.05 about
+**8.2** would clear `|t| > 2` by chance, so
+Benjamini-Hochberg correction is applied. Survivors at q < 0.05:
+
+| Design | ipSAE | sd | seeds | delta vs parent | t | q (BH) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+
+
+46 designs are significantly **below** the parent - the expected shape for edits to
+an affinity-matured antibody, and evidence the screen discriminates rather than
+flattering everything.
+
+**This does not mean these designs bind more tightly.** ipSAE is interface
+confidence, not affinity. No K_D is predicted, and the wet-lab assay is what
+decides.
+
+### What the data overturned
+
+- **A bigger candidate pool does help.** Expected saturation under an additive
+  objective; measured a 49% gain in the top-500 band going from 40k to 1M.
+- **Sequence plausibility anti-correlates with interface quality**
+  (AbLang2 vs epitope recovery, rho ~ -0.47). The parent is affinity-matured, so
+  language models push its CDRs back toward germline - away from the HER2 contacts.
+  Later rounds therefore used sequence scores as a floor, not a maximand.
+- **CDR-H3 editing scored worst**, not best, contradicting the starting hypothesis.
+  Framework-biased edits preserved the interface best.
+
 ## The immutable parent
 
 ```text

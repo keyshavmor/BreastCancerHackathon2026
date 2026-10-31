@@ -1,22 +1,22 @@
 {
-  "generated_utc": "2026-10-31T15:08:52+00:00",
+  "generated_utc": "2026-10-31T15:11:47+00:00",
   "overall": "ATTENTION",
   "failed": 1,
   "designs_cofolded": 250,
-  "submitted_with_ipsae": 249,
+  "submitted_with_ipsae": 248,
   "nominations": 15,
   "checks": [
     {
       "section": "Deliverable",
       "rule": "Proposed sequences, each >=5 mutations vs parent",
       "result": "PASS",
-      "evidence": "249 sequences in submission_scored.fasta; violations=none"
+      "evidence": "248 sequences in submission_scored.fasta; violations=none"
     },
     {
       "section": "Deliverable",
       "rule": "ipSAE score for EVERY submitted design",
       "result": "PASS",
-      "evidence": "249/249 have a finite ipSAE; provenance file present"
+      "evidence": "248/248 have a finite ipSAE; provenance file present"
     },
     {
       "section": "Deliverable",
@@ -28,7 +28,7 @@
       "section": "Deliverable",
       "rule": "Walkthrough of the design approach",
       "result": "PASS",
-      "evidence": "method_walkthrough.md 42035 bytes"
+      "evidence": "method_walkthrough.md 35522 bytes"
     },
     {
       "section": "Steer away from",
@@ -64,13 +64,13 @@
       "section": "Steer away from",
       "rule": "Use ipSAE to discard broken designs, then pick a diverse 15",
       "result": "PASS",
-      "evidence": "39 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
+      "evidence": "44 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
     },
     {
       "section": "Steer away from",
       "rule": "Never mutate the linker or the conserved cysteines",
       "result": "PASS",
-      "evidence": "linker violations=none; cysteine violations=none (all 249 submitted designs keep (GGGGS)x3 at 121-135 and C at [22, 96, 158, 223])"
+      "evidence": "linker violations=none; cysteine violations=none (all 248 submitted designs keep (GGGGS)x3 at 121-135 and C at [22, 96, 158, 223])"
     },
     {
       "section": "Steer away from",

@@ -1,23 +1,23 @@
 {
-  "generated_utc": "2026-10-31T15:08:14.380400+00:00",
+  "generated_utc": "2026-10-31T15:11:45.425832+00:00",
   "overall": "PASS",
   "failed_checks": 0,
-  "submitted_scored_count": 249,
+  "submitted_scored_count": 248,
   "top_n": 15,
-  "excluded_count": 1,
-  "seed_noise_ipsae_sd": 0.0893,
+  "excluded_count": 2,
+  "seed_noise_ipsae_sd": 0.0791,
   "parent_baseline": {
-    "ipsae_min": 0.7127,
-    "sd": 0.0445,
-    "epitope_recovery": 0.9662
+    "ipsae_min": 0.6855,
+    "sd": 0.0595,
+    "epitope_recovery": 0.9699
   },
   "designs_above_parent_beyond_noise": 0,
-  "designs_single_seed_unreliable": 0,
+  "designs_single_seed_unreliable": 86,
   "interpretation_counts": {
     "ABOVE_PARENT": 0,
-    "BELOW_PARENT": 124,
-    "WITHIN_SEED_NOISE": 125,
-    "SINGLE_SEED_UNRELIABLE": 0,
+    "BELOW_PARENT": 61,
+    "WITHIN_SEED_NOISE": 101,
+    "SINGLE_SEED_UNRELIABLE": 86,
     "NO_PARENT_BASELINE": 0
   },
   "checks": [
@@ -54,12 +54,12 @@
     {
       "check": "submitted_sequences_unique",
       "result": "PASS",
-      "detail": "249 rows, 249 unique"
+      "detail": "248 rows, 248 unique"
     },
     {
       "check": "mutation_signatures_unique",
       "result": "PASS",
-      "detail": "249 unique signatures"
+      "detail": "248 unique signatures"
     },
     {
       "check": "reconstructible_from_mutation_list",
@@ -79,7 +79,7 @@
     {
       "check": "parent_baseline_scored",
       "result": "PASS",
-      "detail": "parent ipsae_min=0.7127 over 14 seed(s)"
+      "detail": "parent ipsae_min=0.6855 over 7 seed(s)"
     },
     {
       "check": "no_stale_EGFR_cetuximab_inputs",
