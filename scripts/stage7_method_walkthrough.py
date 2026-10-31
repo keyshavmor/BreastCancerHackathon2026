@@ -394,16 +394,29 @@ def main() -> int:
                   f"significance threshold {pc.get('threshold')}.")
                 A("")
                 A(f"**Above parent: {pc.get('n_above')} | below: {pc.get('n_below')} | "
-                  f"indistinguishable: {pc.get('n_indistinguishable')}**")
+                  f"indistinguishable: {pc.get('n_indistinguishable')}** "
+                  f"(uncorrected, |t| > 2)")
                 A("")
-                A("| Design | seeds | ipSAE mean | sd | delta | t | verdict |")
-                A("| --- | ---: | ---: | ---: | ---: | ---: | --- |")
+                if pc.get("n_tests"):
+                    A(f"**Multiple-comparison correction.** {pc['n_tests']} designs were tested, "
+                      f"so at an uncorrected alpha of 0.05 roughly "
+                      f"**{pc.get('expected_false_positives_at_uncorrected_alpha05')}** of them "
+                      f"would clear |t| > 2 by chance alone. Applying "
+                      f"{pc.get('correction','Benjamini-Hochberg FDR')}, the number of designs "
+                      f"significantly above the parent is "
+                      f"**{pc.get('n_above_fdr')}**. An uncorrected count of "
+                      f"{pc.get('n_above')} is therefore not evidence of improvement, and the "
+                      f"table below reports q-values so this cannot be misread.")
+                    A("")
+                A("| Design | seeds | ipSAE mean | sd | delta | t | q (BH) | verdict |")
+                A("| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |")
                 for d in pc["tests"]:
                     A(f"| `{d['candidate_id']}` | {d['n_seeds']} | {fmt(d['ipsae_mean'])} "
                       f"| {fmt(d['ipsae_sd'])} | {d['delta_vs_parent']:+.4f} | {d['t']:+.2f} "
-                      f"| {d['verdict']} |")
+                      f"| {fmt(d.get('q_value_BH'), 3)} "
+                      f"| {d.get('verdict_fdr', d['verdict'])} |")
                 A("")
-                if pc.get("n_above", 0) == 0:
+                if pc.get("n_above_fdr", pc.get("n_above", 0)) == 0:
                     A("**No design is statistically distinguishable as better than the parent.** "
                       "This is the honest headline result. It is also the expected one: the "
                       "parent is a sub-picomolar, heavily optimised therapeutic antibody, and a "

@@ -330,11 +330,46 @@ def main() -> int:
                               "delta_vs_parent": round(m - pm, 4), "t": round(t, 2),
                               "verdict": "ABOVE_PARENT" if t > 2 else
                                          "BELOW_PARENT" if t < -2 else "INDISTINGUISHABLE"})
+            # Multiple-comparison correction. Testing ~60 designs at alpha=0.05
+            # yields ~3 false positives by chance, so an uncorrected "above
+            # parent" count near 3-4 is indistinguishable from noise. Report
+            # Benjamini-Hochberg q-values and make the headline verdict the
+            # FDR-controlled one; the raw t is kept for transparency.
+            try:
+                from scipy import stats as _st
+
+                for d_ in tests:
+                    n1 = d_["n_seeds"]
+                    # Welch-Satterthwaite dof, approximated with the pooled sds
+                    # we have; conservative enough at these small n.
+                    df = max(1.0, n1 + pn - 2)
+                    d_["p_uncorrected"] = round(
+                        float(2 * _st.t.sf(abs(d_["t"]), df)), 5)
+                ordered = sorted(tests, key=lambda z: z["p_uncorrected"])
+                m = len(ordered)
+                qprev = 1.0
+                for i in range(m - 1, -1, -1):
+                    q = min(qprev, ordered[i]["p_uncorrected"] * m / (i + 1))
+                    ordered[i]["q_value_BH"] = round(float(q), 5)
+                    qprev = q
+                for d_ in tests:
+                    sig = d_.get("q_value_BH", 1.0) < 0.05
+                    d_["verdict_fdr"] = (
+                        "ABOVE_PARENT_FDR" if sig and d_["t"] > 0 else
+                        "BELOW_PARENT_FDR" if sig and d_["t"] < 0 else
+                        "NOT_SIGNIFICANT_AFTER_CORRECTION")
+            except Exception as exc:                             # noqa: BLE001
+                print(f"[warn] FDR correction unavailable: {type(exc).__name__}")
             tests.sort(key=lambda d: -d["delta_vs_parent"])
             rel["parent_comparison"] = {
                 "parent_mean": round(pm, 4), "parent_sd": round(psd, 4), "parent_n_seeds": pn,
                 "threshold": "|t| > 2",
                 "n_above": sum(1 for d in tests if d["verdict"] == "ABOVE_PARENT"),
+                "n_above_fdr": sum(1 for d in tests
+                                   if d.get("verdict_fdr") == "ABOVE_PARENT_FDR"),
+                "n_tests": len(tests),
+                "expected_false_positives_at_uncorrected_alpha05": round(0.05 * len(tests), 1),
+                "correction": "Benjamini-Hochberg FDR at q<0.05 over all tested designs",
                 "n_below": sum(1 for d in tests if d["verdict"] == "BELOW_PARENT"),
                 "n_indistinguishable": sum(1 for d in tests
                                            if d["verdict"] == "INDISTINGUISHABLE"),

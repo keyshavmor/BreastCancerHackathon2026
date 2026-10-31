@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_8022",
-  "generated_utc": "2026-10-31T14:11:51.302008+00:00",
+  "generated_utc": "2026-10-31T14:26:26.483831+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPGNGYTYYADSVKGRFTTSADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVSITCRTSQDVNNAVAWYQQKPGKAPKLLIHSASFLYSGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -38,27 +38,27 @@
   },
   "scores": {
     "rank": "3",
-    "ipsae_min": "0.7231",
-    "ipsae_min_sd": "0.0315",
-    "ipsae_max": "0.8531",
-    "ipsae_delta_vs_parent": "0.0324",
+    "ipsae_min": "0.7267",
+    "ipsae_min_sd": "0.0267",
+    "ipsae_max": "0.8547",
+    "ipsae_delta_vs_parent": "0.0403",
     "ipsae_interpretation": "WITHIN_SEED_NOISE",
     "interface_status": "OK",
-    "n_seeds": "3",
-    "seeds": "13;42;7",
-    "iptm": "0.9027",
-    "pDockQ": "0.5068",
-    "LIS": "0.6096",
-    "epitope_recovery": "0.9825",
+    "n_seeds": "4",
+    "seeds": "101;13;42;7",
+    "iptm": "0.9033",
+    "pDockQ": "0.5044",
+    "LIS": "0.6118",
+    "epitope_recovery": "0.9737",
     "ablang2_contextual": "-0.6527",
     "esm2_contextual": "-0.3715",
     "sequence_consensus_score": "0.9012",
-    "rank_score": "0.7905",
+    "rank_score": "0.8057",
     "max_rank_shift_under_reweighting": "2"
   },
   "structure": {
-    "representative_run": "HER2_8022_seed42",
-    "representative_seed": "42",
+    "representative_run": "HER2_8022_seed101",
+    "representative_seed": "101",
     "selection_rule": "replicate whose ipSAE is closest to the design mean",
     "cif": "complex.cif",
     "target": {
@@ -74,7 +74,7 @@
       "sequence": "CHQLCARGHCWGPGPTQCVNCSQFLRGQECVEECRVLQGLPREYVNARHCLPCHPECQPQNGSVTCFGPEADQCVACAHYKDPPFCVARCPSGVKPDLSYMPIWKFPDEEGACQPCPIN"
     },
     "modelled_interface": {
-      "n_contacts": 29,
+      "n_contacts": 32,
       "her2_residues_contacted_mature": [
         558,
         560,

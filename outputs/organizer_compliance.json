@@ -1,8 +1,8 @@
 {
-  "generated_utc": "2026-10-31T14:25:18+00:00",
+  "generated_utc": "2026-10-31T14:26:25+00:00",
   "overall": "ATTENTION",
   "failed": 1,
-  "designs_cofolded": 150,
+  "designs_cofolded": 209,
   "submitted_with_ipsae": 149,
   "nominations": 15,
   "checks": [
@@ -28,7 +28,7 @@
       "section": "Deliverable",
       "rule": "Walkthrough of the design approach",
       "result": "PASS",
-      "evidence": "method_walkthrough.md 14031 bytes"
+      "evidence": "method_walkthrough.md 23216 bytes"
     },
     {
       "section": "Steer away from",
@@ -46,7 +46,7 @@
       "section": "Steer away from",
       "rule": "Cofold shortlist of 50-100 designs (suggested maximum 100)",
       "result": "FAIL",
-      "evidence": "150 distinct designs cofolded. Submission is presented as a ranked top-50 shortlist plus 15 nominations; the additional cofolds were spent on REPLICATE SEEDS and controls, not on exploring more candidates before screening. See note below."
+      "evidence": "209 distinct designs cofolded. Submission is presented as a ranked top-50 shortlist plus 15 nominations; the additional cofolds were spent on REPLICATE SEEDS and controls, not on exploring more candidates before screening. See note below."
     },
     {
       "section": "Steer away from",
@@ -64,7 +64,7 @@
       "section": "Steer away from",
       "rule": "Use ipSAE to discard broken designs, then pick a diverse 15",
       "result": "PASS",
-      "evidence": "38 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
+      "evidence": "32 designs flagged COLLAPSED and barred from nomination; 15 nominees span 4 branches and 15 distinct mutation signatures"
     },
     {
       "section": "Steer away from",

@@ -1,0 +1,108 @@
+{
+  "candidate_id": "HER2_3536",
+  "generated_utc": "2026-10-31T14:26:27.851481+00:00",
+  "sequence": {
+    "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDYYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADNSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSPGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTINSLQPEDFATYYCQQHYTTPRTFGQGTKVEIK",
+    "length": 242,
+    "sha256": "665de7959af5a3b3bf70f18534701ea33d8754f9e32eb3e804012fa9170c8c66",
+    "vh": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDYYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADNSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSP",
+    "linker": "GGGGSGGGGSGGGGS",
+    "vl": "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTINSLQPEDFATYYCQQHYTTPRTFGQGTKVEIK",
+    "native_cysteines_preserved": true
+  },
+  "design": {
+    "branch": "C_mixed",
+    "mutation_count": 5,
+    "mutations": [
+      "T32Y",
+      "T74N",
+      "S120P",
+      "S211N",
+      "P231R"
+    ],
+    "mutated_cdrs": [
+      "CDR-H1",
+      "CDR-L3",
+      "framework"
+    ],
+    "mutations_at_experimental_interface": [
+      "P231R"
+    ],
+    "reconstructible_from_parent": true
+  },
+  "scores": {
+    "rank": "24",
+    "ipsae_min": "0.7012",
+    "ipsae_min_sd": "0.0599",
+    "ipsae_max": "0.8373",
+    "ipsae_delta_vs_parent": "0.0148",
+    "ipsae_interpretation": "WITHIN_SEED_NOISE",
+    "interface_status": "OK",
+    "n_seeds": "3",
+    "seeds": "13;42;7",
+    "iptm": "0.8899",
+    "pDockQ": "0.4292",
+    "LIS": "0.6126",
+    "epitope_recovery": "0.8596",
+    "ablang2_contextual": "-0.5104",
+    "esm2_contextual": "-0.5737",
+    "sequence_consensus_score": "0.9433",
+    "rank_score": "0.6318",
+    "max_rank_shift_under_reweighting": "39"
+  },
+  "structure": {
+    "representative_run": "HER2_3536_seed7",
+    "representative_seed": "7",
+    "selection_rule": "replicate whose ipSAE is closest to the design mean",
+    "cif": "complex.cif",
+    "target": {
+      "description": "HER2 domain IV crop from 1N8Z chain C",
+      "mature_range": [
+        489,
+        607
+      ],
+      "uniprot_range": [
+        511,
+        629
+      ],
+      "sequence": "CHQLCARGHCWGPGPTQCVNCSQFLRGQECVEECRVLQGLPREYVNARHCLPCHPECQPQNGSVTCFGPEADQCVACAHYKDPPFCVARCPSGVKPDLSYMPIWKFPDEEGACQPCPIN"
+    },
+    "modelled_interface": {
+      "n_contacts": 29,
+      "her2_residues_contacted_mature": [
+        558,
+        560,
+        561,
+        570,
+        571,
+        572,
+        573,
+        582,
+        584,
+        585,
+        586,
+        587,
+        589,
+        590,
+        593,
+        602,
+        603
+      ],
+      "experimental_epitope_recovered": [
+        558,
+        560,
+        561,
+        570,
+        571,
+        572,
+        573,
+        593,
+        602,
+        603
+      ],
+      "experimental_epitope_total": 19,
+      "recovery_fraction": 0.5263
+    }
+  },
+  "claim_boundary": "Scores are computational ranking signals for experimental triage. No K_D is predicted or implied."
+}
