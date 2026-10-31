@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_13625",
-  "generated_utc": "2026-10-31T15:11:48.617257+00:00",
+  "generated_utc": "2026-10-31T15:24:52.697343+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVRPGGSLRLSCAASGFTIKDTYIHWVRQAPGKGLEWVARITSTNGYTRYADSVKGRFSVSAETSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVNWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -36,29 +36,29 @@
   },
   "scores": {
     "rank": "5",
-    "ipsae_min": "0.7451",
-    "ipsae_min_sd": "0.0124",
-    "ipsae_max": "0.8659",
-    "ipsae_delta_vs_parent": "0.0596",
+    "ipsae_min": "0.7498",
+    "ipsae_min_sd": "0.0229",
+    "ipsae_max": "0.8703",
+    "ipsae_delta_vs_parent": "0.0549",
     "ipsae_interpretation": "WITHIN_SEED_NOISE",
     "interface_status": "OK",
-    "n_seeds": "4",
-    "seeds": "101;13;42;7",
-    "iptm": "0.9115",
-    "pDockQ": "0.4804",
-    "LIS": "0.6261",
-    "epitope_recovery": "0.9474",
+    "n_seeds": "28",
+    "seeds": "101;13;42;7;1001;1002;1003;1004;1005;1006;1007;4001;4002;4003;4004;4005;4006;4007;4008;4009;4010;4011;4012;4013;4014;4015;8001;8002",
+    "iptm": "0.9131",
+    "pDockQ": "0.5021",
+    "LIS": "0.6268",
+    "epitope_recovery": "0.9417",
     "ablang2_contextual": "-0.6243",
     "esm2_contextual": "-0.4941",
     "sequence_consensus_score": "0.7377",
-    "rank_score": "0.7998",
-    "max_rank_shift_under_reweighting": "2"
+    "rank_score": "0.8022",
+    "max_rank_shift_under_reweighting": "4"
   },
   "structure": {
-    "representative_run": "HER2_13625_seed13",
-    "representative_seed": "13",
+    "representative_run": "HER2_13625_seed4007",
+    "representative_seed": "4007",
     "selection_rule": "replicate whose ipSAE is closest to the design mean",
-    "cif": "complex.cif",
+    "cif": "",
     "target": {
       "description": "HER2 domain IV crop from 1N8Z chain C",
       "mature_range": [
@@ -72,39 +72,11 @@
       "sequence": "CHQLCARGHCWGPGPTQCVNCSQFLRGQECVEECRVLQGLPREYVNARHCLPCHPECQPQNGSVTCFGPEADQCVACAHYKDPPFCVARCPSGVKPDLSYMPIWKFPDEEGACQPCPIN"
     },
     "modelled_interface": {
-      "n_contacts": 28,
-      "her2_residues_contacted_mature": [
-        558,
-        560,
-        561,
-        569,
-        571,
-        572,
-        573,
-        582,
-        584,
-        586,
-        587,
-        589,
-        590,
-        593,
-        598,
-        602
-      ],
-      "experimental_epitope_recovered": [
-        558,
-        560,
-        561,
-        569,
-        571,
-        572,
-        573,
-        593,
-        598,
-        602
-      ],
+      "n_contacts": 0,
+      "her2_residues_contacted_mature": [],
+      "experimental_epitope_recovered": [],
       "experimental_epitope_total": 19,
-      "recovery_fraction": 0.5263
+      "recovery_fraction": 0.0
     }
   },
   "claim_boundary": "Scores are computational ranking signals for experimental triage. No K_D is predicted or implied."

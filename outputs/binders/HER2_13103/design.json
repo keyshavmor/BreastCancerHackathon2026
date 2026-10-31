@@ -1,6 +1,6 @@
 {
   "candidate_id": "HER2_13103",
-  "generated_utc": "2026-10-31T15:08:31.599917+00:00",
+  "generated_utc": "2026-10-31T15:19:46.340941+00:00",
   "sequence": {
     "full_scfv": "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGPEWVARLYPTNGYTRYAESVKDRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSSGGGGSGGGGSGGGGSDIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASNLYSGVPSRFSGSRSGTDFTLTISSLQPEDFAAYYCQQHYTTPPTFGQGTKVEIK",
     "length": 242,
@@ -33,11 +33,11 @@
     "reconstructible_from_parent": true
   },
   "scores": {
-    "rank": "52",
+    "rank": "50",
     "ipsae_min": "0.7081",
     "ipsae_min_sd": "0.0828",
     "ipsae_max": "0.8449",
-    "ipsae_delta_vs_parent": "-0.0046",
+    "ipsae_delta_vs_parent": "0.0132",
     "ipsae_interpretation": "WITHIN_SEED_NOISE",
     "interface_status": "OK",
     "n_seeds": "8",
@@ -49,8 +49,8 @@
     "ablang2_contextual": "-0.7171",
     "esm2_contextual": "-0.9239",
     "sequence_consensus_score": "0.6792",
-    "rank_score": "0.649",
-    "max_rank_shift_under_reweighting": "5"
+    "rank_score": "0.653",
+    "max_rank_shift_under_reweighting": "10"
   },
   "structure": {
     "representative_run": "HER2_13103_seed1003",
